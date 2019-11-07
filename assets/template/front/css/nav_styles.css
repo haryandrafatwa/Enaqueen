@@ -1,0 +1,80 @@
+html *{
+	font-family: 'Saira', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+input::placeholder {
+  color: white;
+  opacity: 1;
+  font-style: italic;
+}
+
+.dropdown-menu{
+	margin-top: 8px;
+	margin-right: -64px!important;
+	background-color: rgba(51,51,51,0.50)!important;
+	border-radius: 0px!important;
+}
+
+.dropdown-item{
+	color: white!important;
+	text-decoration: none!important;
+	font-size: 12px!important;
+	padding: 8px!important;
+}
+
+.dropdown-item:hover{
+	background-color: #555!important;
+}
+
+.navbar-nav .nav-item .nav-link{
+	color: white;
+}
+
+.navbar-nav .nav-item .nav-link:hover{
+	color: rgba(222,222,222,0.80);
+}
+
+.bg-topbar{
+	background:rgba(51,51,51,0.50);
+}
+
+.language{
+	color: white;
+}
+
+.language:hover{
+	cursor: pointer;
+	filter: invert(20%) sepia(2%) saturate(24%) hue-rotate(156deg) brightness(113%) contrast(88%);
+}
+
+@media screen and (max-width: 600px) {
+	section{
+		position: relative;
+		justify-content: center;
+		align-items: center;
+		background-image:url(../img/background/background-login.jpg);
+		background-size: cover;
+		background-attachment: fixed;
+		min-height: 80vh
+	}
+}
+
+@media screen and (min-width: 601px) {
+	section{
+		position: relative;
+		justify-content: center;
+		align-items: center;
+    	background-color: #808080;
+		background-size: cover;
+		background-attachment: fixed;
+		min-height: 100vh
+	}
+}
