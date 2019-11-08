@@ -43,9 +43,6 @@
 					<a href="#" class="left-item">Order History</a>
 				</div>
 				<div class="row" style="padding-top: 28px;">
-					<a href="#" class="left-item">My Coupons</a>
-				</div>
-				<div class="row" style="padding-top: 28px;">
 					<a href="#" class="left-item">Newsletter</a>
 				</div>
 				<div class="row" style="padding-top: 28px;">

@@ -75,6 +75,8 @@
 													<?php
 														if($firstname == null){
 															echo "-";
+														}else{
+															echo $firstname;
 														}
 													?>
 												</span></center>
@@ -98,6 +100,39 @@
 													<?php
 														if($lastname == null){
 															echo "-";
+														}else{
+															echo $lastname;
+														}
+													?>
+												</span></center>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row" >
+								<div class="col-12" style="margin-top: 20px;">
+									<div class="container" style="padding: 0px">
+										<div class="row">
+											<div class="col-2">
+												<span class="content-lbl">Full Name</span>
+											</div>
+											<div class="col-2">
+												<center><span style="color: white">:</span></center>
+											</div>
+											<div class="col-8">
+												<center><span class="content-txt">
+													<?php
+														if($lastname == null && $firstname == null){
+															echo "-";
+														}else{
+															if($firstname == null){
+																echo $lastname;
+															}else if ($lastname == null){
+																echo $firstname;
+															}else{
+																echo $firstname," ",$lastname;
+															}
 														}
 													?>
 												</span></center>
@@ -139,7 +174,7 @@
 												<a href="#"><span class="btn btn-putih">CHANGE YOUR PASSWORD<span style="color: #0f0">></span></span></a>
 											</div>
 											<div class="col-5">
-												<a href="#"><span class="btn btn-putih text-uppercase">Update your personal details<span style="color: #0f0">></span></span></a>
+												<a href="<?= base_url();?>User/MyAccount/PersonalDetail"><span class="btn btn-putih text-uppercase">Update your personal details<span style="color: #0f0">></span></span></a>
 											</div>
 											<div class="col-3">
 												<a href="#"><span class="btn btn-putih text-uppercase">Update your email<span style="color: #0f0">></span></span></a>

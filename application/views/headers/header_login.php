@@ -14,6 +14,9 @@
 		<link rel="stylesheet" href="<?= base_url();?>/assets/template/front/css/nav_styles.css">
 		<link rel="stylesheet" href="<?= base_url();?>/assets/template/front/css/styles.css">
 		<link href="https://fonts.googleapis.com/css?family=Saira:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 		<link rel="shortcut icon" href="<?= base_url();?>/assets/template/front/img/icons/crown.png">
 
@@ -50,7 +53,7 @@
 					  <button class="btn-search" type="submit" style="margin-left: -50px;background-color: transparent;border: none"><div class="fas fa-search" style="color: white"></div></button>
 					</form>
 					<ul class="navbar-nav ml-4">
-						<li class="nav-item dropdown">
+						<li class="nav-item dropdown" id="navbarCart">
 							<span class="nav-link language" data-toggle="dropdown" id="bahasa" style="margin-top: 14px">
 								<img src="<?= base_url();?>assets/template/front/img/icons/cart.png" alt="" width="30" height="25" >
 							</span>
@@ -75,7 +78,7 @@
 						<li class="nav-item ml-2 dropdown">
 							<span class="nav-link language" data-toggle="dropdown" id="bahasa">
 								<?php
-									echo '<img src="data:image/png;base64,'.base64_encode($photoProfile).'" class="nav-link language" alt="" width="50" height="50" style = "border-radius:50px"/>';
+									echo '<img src="data:image/;base64,'.$photoProfile.'" class="nav-link language" alt="" width="50" height="50" style = "border-radius:50px"/>';
 								?>
 							</span>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 7.9px;">

@@ -77,7 +77,7 @@ class Auth extends CI_Controller{
 			if($username != null){
 				if ($pass != null) {
 					$getUsername = $this->Users_model->getUserName($username);
-					$getPassword = $this->Users_model->getUserPassword($pass);
+					$getPassword = $this->Users_model->getUserPassword($pass,$username);
 					if($getUsername != null){
 						if($getPassword != null){
 							$data_session = array(
@@ -87,7 +87,7 @@ class Auth extends CI_Controller{
 							$this->session->set_userdata($data_session);
 							redirect('User/Home');
 						}else{
-							$this->session->set_flashdata('gagal',"The <strong>Password</strong> is wrong!"+$pass);
+							$this->session->set_flashdata('gagal',"The <strong>Password</strong> is wrong!");
 							redirect('Welcome/Login');
 						}
 					}else{

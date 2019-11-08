@@ -30,7 +30,7 @@ class Home extends CI_Controller{
 	$data['productJav'] = $productJav;
 	$data['productSun'] = $productSun;
 	$data['productBal'] = $productBal;
-
+	  
 	$data['judul'] = 'Food';
 	if ($this->session->userdata('status')== true) {
 		$this->load->view('headers/header_login',$data);

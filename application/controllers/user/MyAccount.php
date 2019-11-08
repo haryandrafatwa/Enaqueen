@@ -45,4 +45,23 @@ class MyAccount extends CI_Controller{
 		redirect('Welcome');
 	}
   }
+	
+	public function updatePersonalDetail(){
+		$username = $this->input->post('username');
+		$firstname = $this->input->post('firstname');
+		$lastname = $this->input->post('lastname');
+		$phoneNumber = $this->input->post('phoneNumber');
+		
+		
+		if(!isset($_FILES['uploadImage'])){
+			$this->um->updatePersonalDetail($username,$firstname,$lastname,null,$phoneNumber);
+			redirect('User/MyAccount/PersonalDetail');
+		}else{
+			$image = $_FILES['uploadImage']['tmp_name']; 
+			$name = $_FILES['uploadImage']['name']; 
+			$image = base64_encode(file_get_contents($image));
+			$this->um->updatePersonalDetail($username,$firstname,$lastname,$image,$phoneNumber);
+			redirect('User/MyAccount/PersonalDetail');
+		}
+	}
 }

@@ -10,8 +10,7 @@
         color: white
       }
     </style>
-    <div class="" style="margin-top: 50px;
-	background-color: rgba(51,51,51,0.8)!important;padding: 50px">
+    <div class="div-footer" style="margin-top: 50px;background-color: rgba(51,51,51,0.8)!important;padding: 50px">
         <div class="row justify-content-center">
           <a class="footer" href="#">Enaqueen.com</a>
         </div>
