@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="row">
-	  
+
 	<!-- INI JAVANESE	-->
     <div class="col-4">
       <div class="" style="background-color:rgba(128,128,128,0.5);border-radius: 20px">
@@ -25,7 +25,7 @@
             <center><h1 style="color:white;font-weight:bold;margin-top:20px">Javanese</h1></center>
           </div>
         </div>
-		<?php foreach ($productJav as $javanese):?>
+		    <?php foreach ($productJav as $javanese):?>
 			<div class="row">
 			  <div class="col-7">
 				  <?php
@@ -40,10 +40,11 @@
 						<center><span style="color:white"><?= $javanese->food_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR 
+						<center><span style="color:white" id="price">IDR
 							<?php
 								echo number_format($javanese->price,0,'.',',');
 							?>
+            </span>
 						</center>
 					  </div>
 					  <div class="">
@@ -60,7 +61,7 @@
 		<?php endforeach; ?>
       </div>
     </div>
-		
+
 	<!-- INI SUNDANESE	-->
 	<div class="col-4">
       <div class="" style="background-color:rgba(128,128,128,0.5);border-radius: 20px">
@@ -84,7 +85,7 @@
 						<center><span style="color:white"><?= $sundanese->food_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR 
+						<center><span style="color:white" id="price">IDR
 							<?php
 								echo number_format($sundanese->price,0,'.',',');
 							?>
@@ -104,7 +105,7 @@
 		<?php endforeach; ?>
       </div>
     </div>
-		
+
 	<!-- INI BALINESE	-->
 	<div class="col-4">
       <div class="" style="background-color:rgba(128,128,128,0.5);border-radius: 20px">
@@ -128,7 +129,7 @@
 						<center><span style="color:white"><?= $balinese->food_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR 
+						<center><span style="color:white" id="price">IDR
 							<?php
 								echo number_format($balinese->price,0,'.',',');
 							?>
@@ -148,8 +149,9 @@
 		<?php endforeach; ?>
       </div>
     </div>
-		
+
   </div>
+
 </div>
 	<script>
 		console.log('<?= $productJav['food_name'][1]; ?>');

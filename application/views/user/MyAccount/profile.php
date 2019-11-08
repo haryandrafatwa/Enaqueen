@@ -2,25 +2,25 @@
 	.btn-putih{
 		background-color: white;
 	}
-	
+
 	.content-lbl{
 		color: white;
 	}
-	
+
 	.content-txt{
 		color: white
 	}
-	
+
 	.active{
 		color: white;
 		font-weight: 600;
 		font-size: 24px
 	}
-	
+
 	.left-item{
 		color: white;
 	}
-	
+
 	.left-item:hover{
 		color: rgba(51,51,51,0.5);
 		text-decoration: none
@@ -46,9 +46,6 @@
 							<a href="#" class="left-item">Order History</a>
 						</div>
 						<div class="row" style="padding-top: 28px;">
-							<a href="#" class="left-item">My Coupons</a>
-						</div>
-						<div class="row" style="padding-top: 28px;">
 							<a href="#" class="left-item">Newsletter</a>
 						</div>
 						<div class="row" style="padding-top: 28px;">
@@ -71,10 +68,16 @@
 												<span class="content-lbl">First Name</span>
 											</div>
 											<div class="col-2">
-												<span style="color: white">:</span>
+												<center><span style="color: white">:</span></center>
 											</div>
 											<div class="col-8">
-												<span class="content-txt">-</span>
+												<center><span class="content-txt">
+													<?php
+														if($firstname == null){
+															echo "-";
+														}
+													?>
+												</span></center>
 											</div>
 										</div>
 									</div>
@@ -88,10 +91,16 @@
 												<span class="content-lbl">Last Name</span>
 											</div>
 											<div class="col-2">
-												<span style="color: white">:</span>
+												<center><span style="color: white">:</span></center>
 											</div>
 											<div class="col-8">
-												<span class="content-txt">-</span>
+												<center><span class="content-txt">
+													<?php
+														if($lastname == null){
+															echo "-";
+														}
+													?>
+												</span></center>
 											</div>
 										</div>
 									</div>
@@ -105,10 +114,18 @@
 												<span class="content-lbl">Email Address</span>
 											</div>
 											<div class="col-2">
-												<span style="color: white">:</span>
+												<center><span style="color: white">:</span></center>
 											</div>
 											<div class="col-8">
-												<span class="content-txt">-</span>
+												<center><span class="content-txt">
+													<?php
+														if($email == null){
+															echo "-";
+														}else{
+															echo $email;
+														}
+													?>
+												</span></center>
 											</div>
 										</div>
 									</div>
@@ -133,7 +150,17 @@
 							</div>
 						</div>
 					</div>
-				</div> 
+				</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	var email = '<?= $this->session->userdata('email'); ?>';
+	if(email == null){
+		document.getElementById("btn-addCart").onclick = function(){
+			alert('Anda Belom login');
+		}
+	}else{
+		
+	}
+</script>
