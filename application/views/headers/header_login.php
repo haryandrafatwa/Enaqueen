@@ -23,8 +23,21 @@
 	</head>
 
 	<body>
+		<style>
+	
+			.view-detail-cart{
+				color: white!important;
+			}
+
+			.view-detail-cart:hover{
+				color: #808080!important;
+				cursor: pointer!important;
+				text-decoration: none!important;
+			}
+
+		</style>
 		<section>
-			<nav class="navbar navbar-expand-lg navbar-dark static-top bg-topbar">
+			<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-topbar" id="bg-topbar">
 			  <div class="container">
 				<a class="navbar-brand" href="<?= base_url(); ?>User/Home">
 					<img src="<?= base_url();?>/assets/template/front/img/icons/crown.png" alt="" width="50" height="30">
@@ -57,7 +70,7 @@
 							<span class="nav-link language" data-toggle="dropdown" id="bahasa" style="margin-top: 14px">
 								<img src="<?= base_url();?>assets/template/front/img/icons/cart.png" alt="" width="30" height="25" >
 							</span>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 7.9px;width:300px">
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 7.9px;width:420px">
 								<div class="container">
 									<div class="col-12">
 										<span style="font-size: 18px;font-weight: normal;color: white">MY CART</span>
@@ -68,8 +81,59 @@
 									<div class="col-12" style="text-align: center;padding: 20px" id="cart-empty">
 										<span style="font-size: 18px;font-weight: normal;color: white">Your Cart is Empty</span>
 									</div>
-									<div style="">
+									<div style="col-12">
 										<div class="container" id="cart-avail" style="display: none">
+											<?php $totalprice = 0; foreach ($cart as $cart):?>
+											<div class="row">
+												<div class="col-2">
+													<?php
+														if ($cart->food_name != null){
+															echo '<img src="data:image/;base64,'.$cart->food_photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
+														}else if ($cart->drink_name != null){
+															echo '<img src="data:image/;base64,'.$cart->drink_photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
+														}else if ($cart->dessert_name != null){
+															echo '<img src="data:image/;base64,'.$cart->dessert_photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
+														}
+													?>
+												</div>
+												<div class="col-4 ml-4">
+													<div class="row">
+														<span style="color:white"><?php echo $cart->food_name;echo $cart->drink_name; echo $cart->dessert_name;?></span>
+													</div>
+													<div class="row">
+														<span style="color:white">QTY: <?php echo $cart->amount;?></span>
+													</div>
+												</div>
+												<div class="col-4" style="" >
+													<div class="row">
+														<span style="color:white;margin-top: 10px">IDR <?php 
+															if($cart->food_name != null){
+																$price = $cart->food_price*$cart->amount;
+																echo number_format($price,0,'.','.');
+															}else if ($cart->drink_name != null){
+																$price = $cart->drink_price*$cart->amount;
+																echo number_format($price,0,'.','.');
+															}else if ($cart->dessert_name != null){
+																$price = $cart->dessert_price*$cart->amount;
+																echo number_format($price,0,'.','.');
+															}?></span>
+													</div>
+												</div>
+												<div class="col-1" style="margin-left: -18px">
+													<button onClick="deleteAlert('<?= $username; ?>','<?php echo $cart->food_name?>','<?php echo $cart->drink_name?>','<?php echo $cart->dessert_name?>');" class="fas fa-trash-alt" style="background-color: transparent;border: none;color: white;margin-top: 12px"></button>
+												</div>
+											</div>
+											<?php $totalprice = $totalprice+$price; endforeach; ?>
+											<div class="row" style="background-color: rgba(51,51,51);padding: 8px">
+												<div class="col-3" style="margin-top: 4px">
+													<a href="<?= base_url();?>User/Home/Cart" class="view-detail-cart" style="font-size: 12px">View Detail</a>
+												</div>
+												<div class="col-9" style="text-align: right">
+													<span style="color:white">Total Price: <b>IDR <?php
+															echo number_format($totalprice,0,'.','.');
+														?></b></span>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -91,5 +155,67 @@
 			</div>
 		</nav>
 		<script>
-			console.log("<?= $username;?>");	
+			
+			console.log("<?= $username;?>");
+			var cart = <?= $statusCart; ?> ;
+			
+			console.log(cart);
+			if(cart == 1){
+				document.getElementById("cart-empty").style.display = "none";
+				document.getElementById("cart-avail").style.display = "block";
+			}else{
+				document.getElementById("cart-empty").style.display = "block";
+				document.getElementById("cart-avail").style.display = "none";
+			}
+			
+			function deleteAlert(username,food,drink,dessert){
+				
+				console.log("ini food "+food);
+				console.log("ini drink "+drink);
+				console.log("ini dessert "+dessert);
+				
+				const swalWithBootstrapButtons = Swal.mixin({
+				  customClass: {
+					confirmButton: 'btn btn-success',
+					cancelButton: 'btn btn-danger'
+				  },
+				  buttonsStyling: true
+				})
+
+				swalWithBootstrapButtons.fire({
+				  title: 'Are you sure?',
+				  text: "You won't be able to revert this!",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonText: 'Yes, delete it!',
+				  cancelButtonText: 'No, cancel!',
+				  reverseButtons: true
+				}).then((result) => {
+				  if (result.value) {
+					swalWithBootstrapButtons.fire(
+					  'Deleted!',
+					  'Your item has been deleted.',
+					  'success'
+					).then((result) => { 
+						if(food != ""){
+							window.location = "<?= base_url(); ?>User/Home/deleteFromCart/"+username+"/"+food+"/Food";
+						}else if(drink != ""){
+							window.location = "<?= base_url(); ?>User/Home/deleteFromCart/"+username+"/"+drink+"/Drink";
+						}else if(dessert != ""){
+							window.location = "<?= base_url(); ?>User/Home/deleteFromCart/"+username+"/"+dessert+"/Dessert";
+						}
+						
+					});
+				  } else if (
+					 //Read more about handling dismissals below 
+					result.dismiss === Swal.DismissReason.cancel
+				  ) {
+					swalWithBootstrapButtons.fire(
+					  'Cancelled',
+					  'Your imaginary file is safe :)',
+					  'error'
+					)
+				  }
+				});
+			}
 		</script>

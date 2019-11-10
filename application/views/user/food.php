@@ -187,11 +187,11 @@
 		var i = <?= count($productJav); ?> ;
 		var h = <?= count($productSun); ?> ;
 		var j = <?= count($productBal); ?> ;
-		console.log(i);
+		console.log(username+j);
 		if(username == 'admin'){
 			document.getElementById("add-product").style.display = "block";
 			document.getElementById("navbarCart").style.display = "none";
-			document.getElementById("add-product-link").href = "<?= base_url();?>Admin/Product/addFoodProduct";
+			document.getElementById("add-product-link").href = "<?= base_url();?>Admin/ProductFood/addFoodProduct";
 			
 			for(var y = 0; y < i;y++){
 				document.getElementById("btn-edit-javanese-"+y).style.display = "block";
@@ -217,11 +217,36 @@
 	function clicked(test){
 		var username = "<?php echo $this->session->userdata('username'); ?>";
 		if(username == 'admin'){
-			window.location = "<?= base_url();?>Admin/Product/editFoodProduct/"+test;
+			window.location = "<?= base_url();?>Admin/ProductFood/editFoodProduct/"+test;
 		}else if(username == ""){
-			alert("ANDA HARUS LOGIN!");
+			addCartAlert();
 		}else{
-			console.log(test);
+			window.location = "<?= base_url();?>User/Home/addToCart/"+test+"/"+username+"/Food";
 		}
 	}
+	
+	function addCartAlert(){
+		const swalWithBootstrapButtons = Swal.mixin({
+		  customClass: {
+			confirmButton: 'btn btn-hijau',
+			cancelButton: 'btn btn-merah'
+		  },
+		  buttonsStyling: true
+		})
+
+		swalWithBootstrapButtons.fire({
+		  title: 'You are not logged in',
+		  text: "You must be logged in to be able add an items to your cart",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonText: 'Login now',
+		  cancelButtonText: 'No, cancel',
+		  reverseButtons: true
+		}).then((result) => {
+		  if(result.value){
+			  window.location = "<?= base_url();?>Welcome/Login";
+		  }
+		});
+	}
+	
 </script>

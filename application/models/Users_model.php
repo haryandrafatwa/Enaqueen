@@ -57,5 +57,69 @@ class Users_model extends CI_Model{
 			$this->db->update('user', $data);
 		}
 	}
+	
+	function getCart($username,$productName,$category){
+		$this->db->where(array('username' => $username, $category.'_name' => $productName));
+		$result = $this->db->get('cart');
+		return $result->row_array();
+	}
+	
+	function getCartList($username){
+		
+		$this->db->select('cart.food_name as food_name,cart.drink_name as drink_name,cart.dessert_name as dessert_name,cart.amount as amount,food.photo as food_photo,drink.photo as drink_photo,dessert.photo as dessert_photo,food.price as food_price,drink.price as drink_price,dessert.price as dessert_price');
+		$this->db->from('cart');
+		
+		$this->db->join('food', 'food.food_name = cart.food_name','left');
+		$this->db->join('drink', 'drink.drink_name = cart.drink_name','left');
+		$this->db->join('dessert', 'dessert.dessert_name = cart.dessert_name','left');
+		
+		$this->db->where('username',$username);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function addCart($username,$productName,$category){
+		if($category == 'Food'){
+			$data = [
+				"username" => $username,
+				"food_name" => $productName,
+				"drink_name" => "",
+				"dessert_name" => "",
+				"amount" => 1,
+			];
+		}else if($category == 'Drink'){
+			$data = [
+				"username" => $username,
+				"food_name" => "",
+				"drink_name" => $productName,
+				"dessert_name" => "",
+				"amount" => 1,
+			];
+		}else if($category == 'Dessert'){
+			$data = [
+				"username" => $username,
+				"food_name" => "",
+				"drink_name" => "",
+				"dessert_name" => $productName,
+				"amount" => 1,
+			];
+		}
+		$this->db->insert('cart', $data);
+	}
+	
+	function updateCart($username,$productName,$amount,$category){
+		$data = [
+			"amount" => $amount,
+		];
+		$this->db->where(array(
+			"username" => $username,
+			$category."_name" => $productName));
+		$this->db->update('cart', $data);
+	}
+	
+	public function deleteCart($username,$product,$category){
+		$this->db->where(array('username' => $username,$category.'_name' => $product));
+		$this->db->delete('cart');
+	}
 
 }

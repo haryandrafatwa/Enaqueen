@@ -10,6 +10,17 @@ class MyAccount extends CI_Controller{
   public function index(){
 	$username = $this->session->userdata('username');
 	$data = $this->um->getUserName($username);
+	  
+	$cart = $this->um->getCartList($username);
+	  
+	if($cart != null){
+		$data['statusCart'] = true;
+	}else{
+		$data['statusCart'] = false;
+	}
+	  
+	$data['cart'] = $cart;
+	  
 	$data['judul'] = 'Profile';
 	if ($this->session->userdata('status')== true) {
 		$this->load->view('headers/header_login',$data);
@@ -23,6 +34,17 @@ class MyAccount extends CI_Controller{
   public function Profile(){
 	$username = $this->session->userdata('username');
 	$data = $this->um->getUserName($username);
+	  
+	$cart = $this->um->getCartList($username);
+	  
+	if($cart != null){
+		$data['statusCart'] = true;
+	}else{
+		$data['statusCart'] = false;
+	}
+	  
+	$data['cart'] = $cart;
+	  
 	$data['judul'] = 'Profile';
 	if ($this->session->userdata('status')== true) {
 		$this->load->view('headers/header_login',$data);
@@ -36,6 +58,17 @@ class MyAccount extends CI_Controller{
 	public function PersonalDetail(){
 	$username = $this->session->userdata('username');
 	$data = $this->um->getUserName($username);
+		
+	$cart = $this->um->getCartList($username);
+	  
+	if($cart != null){
+		$data['statusCart'] = true;
+	}else{
+		$data['statusCart'] = false;
+	}
+	  
+	$data['cart'] = $cart;
+		
 	$data['judul'] = 'Personal Detail';
 	if ($this->session->userdata('status')== true) {
 		$this->load->view('headers/header_login',$data);

@@ -21,6 +21,9 @@
 		<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 		<link rel="shortcut icon" href="<?= base_url();?>/assets/template/front/img/icons/crown.png">
 

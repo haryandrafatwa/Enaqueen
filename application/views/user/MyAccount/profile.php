@@ -126,9 +126,9 @@
 														if($lastname == null && $firstname == null){
 															echo "-";
 														}else{
-															if($firstname == null){
+															if($firstname == null || $firstname == "-"){
 																echo $lastname;
-															}else if ($lastname == null){
+															}else if ($lastname == null || $lastname == "-"){
 																echo $firstname;
 															}else{
 																echo $firstname," ",$lastname;
