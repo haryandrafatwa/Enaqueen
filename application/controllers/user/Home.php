@@ -143,16 +143,19 @@ class Home extends CI_Controller{
 		$productName = urldecode($productName);
 		$category = urldecode($category);
 		$cart = $this->um->getCart($username,$productName,$category);
+		$product = $this->pm->getAProduct($productName,$category);
 		
+		$price = $product['price'];
 		$amount = $cart['amount'];
 		$amount = $amount + 1;
+		$price = $amount*$price;
 		
 		if($cart == null){
-			$this->um->addCart($username,$productName,$category);
+			$this->um->addCart($username,$productName,$category,$price);
 			$this->session->set_flashdata('gagal',"The product successfully added to your cart!");
 			redirect('User/Home/'.$category);
 		}else{
-			$this->um->updateCart($username,$productName,$amount,$category);
+			$this->um->updateCart($username,$productName,$amount,$category,$price);
 			$this->session->set_flashdata('gagal',"The product successfully added to your cart!");
 			redirect('User/Home/'.$category);
 		}
@@ -187,10 +190,47 @@ class Home extends CI_Controller{
 		$data['judul'] = 'Home';
 		if ($this->session->userdata('status')== true) {
 			$this->load->view('headers/header_login',$data);
+			$this->load->view('user/cart');
+			$this->load->view('footers/footer');
 		}else{
-			$this->load->view('headers/header_not_login',$data);
+			redirect('User/Home/');
 		}
-		$this->load->view('user/cart');
-		$this->load->view('footers/footer');
+		
 	}
+	
+	public function Checkout(){
+		$username = $this->session->userdata('username');
+		$data = $this->um->getUserName($username);
+		
+		$data['obj'] = $_GET['obj'];
+		print_r($data['obj']);
+		
+		
+		$data['judul'] = 'Home';
+		if ($this->session->userdata('status')== true) {
+			$this->load->view('headers/header_login',$data);
+			$this->load->view('user/Checkout');
+			$this->load->view('footers/footer');
+		}else{
+			redirect('User/Home/');
+		}
+	}
+	
+	function cryptoJsAesDecrypt($passphrase, $jsonString){
+    $jsondata = json_decode($jsonString, true);
+    $salt = hex2bin($jsondata["s"]);
+    $ct = base64_decode($jsondata["ct"]);
+    $iv  = hex2bin($jsondata["iv"]);
+    $concatedPassphrase = $passphrase.$salt;
+    $md5 = array();
+    $md5[0] = md5($concatedPassphrase, true);
+    $result = $md5[0];
+    for ($i = 1; $i < 3; $i++) {
+        $md5[$i] = md5($md5[$i - 1].$concatedPassphrase, true);
+        $result .= $md5[$i];
+    }
+    $key = substr($result, 0, 32);
+    $data = openssl_decrypt($ct, 'aes-256-cbc', $key, true, $iv);
+    return json_decode($data, true);
+}
 }

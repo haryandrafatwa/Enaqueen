@@ -30,7 +30,7 @@
 	}
 	
 </style>
-<div class="container" style="margin-top: 60px">
+<div class="container" style="margin-top: 60px;height: 100%">
 	<div class="row">
 		<div class="col-8">
 			<div class="container">
@@ -46,14 +46,14 @@
 					</div>
 				</div>
 				<div style="border: 3px solid rgba(0,0,0,0.15);margin-top: 20px"></div>
-				<?php $i = 0; $totalprice = 0;foreach ($cart as $cart): ?>
+				<?php $i = 0; $totalprice = 0; $prices;foreach ($cart as $cart): ?>
 				<div>
 					<div class="row">
 						<div class="col-12" style="margin-top: 20px">
 							<div class="container" style="padding: 0px;width: 100%">
 								<div class="input-group-text row " style="background-color: transparent;border: none;padding: 0px;width: 100%">
 									<div class="col-1 custom-control custom-checkbox">
-										<input type="checkbox" aria-label="Checkbox for following text input" class="form-control custom-control-input" id="checkbox-<?= $i ?>" onClick="checklist()">
+										<input type="checkbox" aria-label="Checkbox for following text input" class="form-control custom-control-input" id="checkbox-<?= $i ?>" onClick="checklist()" data-tags="<?php echo $cart->food_name;echo $cart->drink_name; echo $cart->dessert_name;?>">
 										<label class="custom-control-label" for="checkbox-<?= $i ?>" style="transform: scale(1.5);margin-left: 30px" ></label>
 									</div>
 									<div class="col-4" style="">
@@ -74,25 +74,25 @@
 										<div class="row">
 											<span style="font-size: 24px;color: white;font-weight: 600">IDR <?php 
 												if($cart->food_name != null){
-													$price = $cart->food_price*$cart->amount;
+													$price =  $cart->food_price;
 													echo number_format($price,0,'.','.');
 												}else if ($cart->drink_name != null){
-													$price = $cart->drink_price*$cart->amount;
+													$price = $cart->drink_price;
 													echo number_format($price,0,'.','.');
 												}else if ($cart->dessert_name != null){
-													$price = $cart->dessert_price*$cart->amount;
+													$price = $cart->dessert_price;
 													echo number_format($price,0,'.','.');
 												}?></span>
 											<input type="number" id="input-price-<?= $i ?>" value="<?php 
 												if($cart->food_name != null){
-													$price = $cart->food_price;
-													echo $price;
+													$prices = $cart->food_price*$cart->amount;
+													echo $cart->food_price;
 												}else if ($cart->drink_name != null){
-													$price = $cart->drink_price;
-													echo $price;
+													$prices = $cart->drink_price*$cart->amount;
+													echo $cart->drink_price;
 												}else if ($cart->dessert_name != null){
-													$price = $cart->dessert_price;
-													echo $price;
+													$prices = $cart->dessert_price*$cart->amount;
+													echo $cart->dessert_price;
 												}?>" style="display: none">
 										</div>
 									</div>
@@ -109,7 +109,7 @@
 						</div>
 					</div>
 				</div>
-				<?php $i++;$totalprice = $totalprice + $price; endforeach; ?>
+				<?php $i++;$totalprice = $totalprice + $prices; endforeach; ?>
 			</div>
 		</div>
 		<div class="col-4" style="background-color: rgba(0,0,0,0.15);border-radius: 10px;height: 100%">
@@ -131,14 +131,53 @@
 						</div>
 					</div>
 					<div class="col-12" style="padding: 0px;margin-top: 20px;margin-bottom: 20px">
-						<button style="width: 100%;font-size: 18px;padding: 6px;background-color: white;border: none;border-radius: 10px" id="btn-buy"></button>
+						<button style="width: 100%;font-size: 18px;padding: 6px;background-color: #0d0;border: none;border-radius: 10px" id="btn-buy" onClick="onBuy()"></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script src='https://javascriptbase64.googlecode.com/files/base64.js' type='text/javascript'></script>
 <script>
+		
+	function buyAlert(){
+		Swal.fire(
+		  'Warning!',
+		  'Please select an item, at least one!',
+		  'warning'
+		)
+	}
+	
+	function onBuy(){
+		var i = <?= $i ?>;
+		window.value = 0;
+		var listObjCart = [];
+		for( var y = 0; y < i; y++){
+			var objCart = {};
+			if($('#checkbox-'+y).prop("checked") == true){
+				window.value = window.value + 1;
+				objCart['productName'] = document.getElementById("checkbox-"+y).dataset.tags;
+				objCart['amount'] = (document.getElementById("input-amount-"+y).value);
+				objCart['price'] = (document.getElementById("input-price-"+y).value);
+				listObjCart.push(objCart);
+			}
+		}
+		
+		if(listObjCart.length != 0){
+			//var encrypted = encrypt(objCart,'Some');
+			/*var encrypted = CryptoJS.AES.encrypt(JSON.stringify(listObjCart),"iniobjekcart");
+			alert(encrypted);
+			var decrypted = CryptoJS.AES.decrypt(encrypted,"iniobjekcart");*/
+			
+			var objJsonStr = btoa(JSON.stringify(listObjCart))
+			window.location = "<?= base_url(); ?>User/Home/Checkout?obj="+objJsonStr;
+		}else{
+			buyAlert();
+		}
+		
+	}
 	
 	function isInputNumber(evt){
 		var ch = String.fromCharCode(evt.which);
@@ -163,8 +202,12 @@
 				document.getElementById("selectAll").checked = true;
 			}else if (window.value == 0){
 				document.getElementById("btn-buy").innerHTML = "Buy";
+				document.getElementById("btn-buy").style.backgroundColor = "#808080";
+				document.getElementById("btn-buy").style.color = "white";
 			}else{
 				document.getElementById("btn-buy").innerHTML = "Buy("+window.value+")";
+				document.getElementById("btn-buy").style.backgroundColor = "#0d0";
+				document.getElementById("btn-buy").style.color = "black";
 			}
 			
 		}
@@ -177,12 +220,16 @@
 						document.getElementById("checkbox-"+y).checked = true;
 					}
 					document.getElementById("btn-buy").innerHTML = "Buy("+i+")";
+					document.getElementById("btn-buy").style.backgroundColor = "#0d0";
+					document.getElementById("btn-buy").style.color = "black";
 				}
 				else{
 					for( var j = 0; j < i; j++){
 						document.getElementById("checkbox-"+j).checked = false;
 					}
 					document.getElementById("btn-buy").innerHTML = "Buy";
+					document.getElementById("btn-buy").style.backgroundColor = "#808080";
+					document.getElementById("btn-buy").style.color = "white";
 				}
 			});
 			
@@ -206,28 +253,28 @@
 		  currency: 'IDR',
 		  minimumFractionDigits: 0
 		});
+		var k = <?= $i ?>;
 		if(amount < 1){
 			document.getElementById("input-amount-"+i).value = 1; 
-			var k = <?= $i ?>;
-			var newPrice = 0;
-			var newAmount = 0;
-			var newTotPrice = 0;
-			var zz = 0;
-			for( var y = 0; y < k; y++){
-				zz = document.getElementById("input-price-"+y).value;
-				newAmount = parseInt(document.getElementById("input-amount-"+y).value);
-				newPrice = newAmount *parseInt(zz);
-				newTotPrice = newTotPrice + newPrice;
+			var totalPrice = 0;
+			for (var x = 0; x < k; x++){
+				var newAmount = 0;
+				var newPrice = 0;
+				newAmount = newAmount+ parseInt(document.getElementById("input-amount-"+x).value);
+				newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
+				totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
 			}
-			document.getElementById("spanPrice").innerHTML = formatter.format(newTotPrice); 
-			document.getElementById("totPrice").value = newTotPrice; 
 		}else{
-			var newPrice = amount*price;
-			var totPrice = document.getElementById("totPrice").value;
-			totPrice = parseInt(totPrice) + parseInt(newPrice) - price;
-			document.getElementById("spanPrice").innerHTML = formatter.format(totPrice); 
-			document.getElementById("totPrice").value = totPrice; 
+			var totalPrice = 0;
+			for (var x = 0; x < k; x++){
+				var newAmount = 0;
+				var newPrice = 0;
+				newAmount = newAmount+ parseInt(document.getElementById("input-amount-"+x).value);
+				newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
+				totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
+			}
 		}
+		document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 	}
 	
 	function plusAmount(i,price){
@@ -240,10 +287,18 @@
 		var value = parseInt(document.getElementById("input-amount-"+i).value);
 		var result = value + 1;
 		document.getElementById("input-amount-"+i).value = result;
-		var totPrice = document.getElementById("totPrice").value;
-		totPrice = parseInt(totPrice) + parseInt(price);
-		document.getElementById("spanPrice").innerHTML = formatter.format(totPrice); 
-		document.getElementById("totPrice").value = totPrice; 
+		
+		var k = <?= $i ?>;
+		
+		var totalPrice = 0;
+		for (var x = 0; x < k; x++){
+			var newAmount = 0;
+			var newPrice = 0;
+			newAmount = newAmount+ parseInt(document.getElementById("input-amount-"+x).value);
+			newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
+			totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
+		}
+		document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 	}
 	
 	function minAmount(i,price){
@@ -256,10 +311,18 @@
 		var value = document.getElementById("input-amount-"+i).value;
 		if (value != 1){
 			document.getElementById("input-amount-"+i).value = value-1;
-			var totPrice = document.getElementById("totPrice").value;
-			totPrice = parseInt(totPrice) - parseInt(price);
-			document.getElementById("spanPrice").innerHTML = formatter.format(totPrice); 
-			document.getElementById("totPrice").value = totPrice; 
+			
+			var k = <?= $i ?>;
+		
+			var totalPrice = 0;
+			for (var x = 0; x < k; x++){
+				var newAmount = 0;
+				var newPrice = 0;
+				newAmount = newAmount+ parseInt(document.getElementById("input-amount-"+x).value);
+				newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
+				totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
+			}
+			document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 		}
 	}
 </script>

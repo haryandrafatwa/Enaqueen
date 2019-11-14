@@ -26,11 +26,11 @@ class Users_model extends CI_Model{
 		$data = [
 			"username" => $this->input->post('username', true),
 			"email" => $this->input->post('email', true),
-			"firstname" => "",
-			"lastname" => "",
+			"firstname" => "-",
+			"lastname" => "-",
 			"password" => base64_encode($this->input->post('password', true)),
-			"no_telp" => "",
-			"alamat" => "",
+			"no_telp" => "-",
+			"alamat" => "-",
 			"photoProfile" => base64_encode(file_get_contents($url)),
 		];
 		return $this->db->insert('user', $data);
@@ -78,7 +78,7 @@ class Users_model extends CI_Model{
 		return $query->result();
 	}
 	
-	function addCart($username,$productName,$category){
+	function addCart($username,$productName,$category,$price){
 		if($category == 'Food'){
 			$data = [
 				"username" => $username,
@@ -86,6 +86,7 @@ class Users_model extends CI_Model{
 				"drink_name" => "",
 				"dessert_name" => "",
 				"amount" => 1,
+				"price" => $price
 			];
 		}else if($category == 'Drink'){
 			$data = [
@@ -94,6 +95,7 @@ class Users_model extends CI_Model{
 				"drink_name" => $productName,
 				"dessert_name" => "",
 				"amount" => 1,
+				"price" => $price
 			];
 		}else if($category == 'Dessert'){
 			$data = [
@@ -102,14 +104,16 @@ class Users_model extends CI_Model{
 				"drink_name" => "",
 				"dessert_name" => $productName,
 				"amount" => 1,
+				"price" => $price
 			];
 		}
 		$this->db->insert('cart', $data);
 	}
 	
-	function updateCart($username,$productName,$amount,$category){
+	function updateCart($username,$productName,$amount,$category,$price){
 		$data = [
 			"amount" => $amount,
+			"price" => $price
 		];
 		$this->db->where(array(
 			"username" => $username,
