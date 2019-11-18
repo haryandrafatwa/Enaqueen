@@ -34,7 +34,7 @@
 					<a href="<?=base_url();?>User/MyAccount/Profile" class="left-item">Profile</a>
 				</div>
 				<div class="row" style="padding-top: 28px;">
-					<a href="#" class="left-item">Address Book</a>
+					<a href="<?=base_url();?>User/MyAccount/AddressBook" class="left-item">Address Book</a>
 				</div>
 				<div class="row" style="padding-top: 28px;">
 					<a href="#" class="left-item">Saved Carts</a>
@@ -114,7 +114,7 @@
 								</div>
 								<div class="dropdown-divider col-12" style="border: 0.5px solid white;margin-top: 20px"></div>
 								<div class="col-12" style="padding: 0px">
-									<a href="" class="jmb-isi">Manage your delivery addresses</a>
+									<a href="<?=base_url();?>User/MyAccount/AddressBook" class="jmb-isi">Manage your delivery addresses</a>
 								</div>
 							</div>
 						</div>

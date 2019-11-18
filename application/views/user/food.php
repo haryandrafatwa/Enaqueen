@@ -65,9 +65,9 @@
 						<center><span style="color:white"><?= $javanese->food_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR
+						<center><span style="color:white" id="price">Rp
 							<?php
-								echo number_format($javanese->price,0,'.',',');
+								echo number_format($javanese->price,0,'.','.');
 							?>
             				</span>
 						</center>
@@ -111,9 +111,9 @@
 						<center><span style="color:white"><?= $sundanese->food_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR
+						<center><span style="color:white" id="price">Rp
 							<?php
-								echo number_format($sundanese->price,0,'.',',');
+								echo number_format($sundanese->price,0,'.','.');
 							?>
 						</center>
 					  </div>
@@ -156,9 +156,9 @@
 						<center><span style="color:white"><?= $balinese->food_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR
+						<center><span style="color:white" id="price">Rp
 							<?php
-								echo number_format($balinese->price,0,'.',',');
+								echo number_format($balinese->price,0,'.','.');
 							?>
 						</center>
 					  </div>
@@ -190,6 +190,7 @@
 		console.log(username+j);
 		if(username == 'admin'){
 			document.getElementById("add-product").style.display = "block";
+			document.getElementById("dataUser").style.display = "block";
 			document.getElementById("navbarCart").style.display = "none";
 			document.getElementById("add-product-link").href = "<?= base_url();?>Admin/ProductFood/addFoodProduct";
 			

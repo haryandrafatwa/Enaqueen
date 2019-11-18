@@ -34,10 +34,10 @@
 							<a href="<?=base_url();?>User/MyAccount" class="left-item" style="font-size: 18px;font-weight: 600">MY ACCOUNT</a>
 						</div>
 						<div class="row" style="padding-top: 28px;">
-							<a href="<?=base_url();?>User/MyAccount/Profile" class="left-item">Profile</a>
+							<a href="<?=base_url();?>User/MyAccount/Profile" class="left-item" style="color: rgba(51,51,51,0.8);">Profile</a>
 						</div>
 						<div class="row" style="padding-top: 28px;">
-							<a href="#" class="left-item">Address Book</a>
+							<a href="<?=base_url();?>User/MyAccount/AddressBook" class="left-item">Address Book</a>
 						</div>
 						<div class="row" style="padding-top: 28px;">
 							<a href="#" class="left-item">Saved Carts</a>

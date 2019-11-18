@@ -62,9 +62,9 @@
                 <center><span><?= $icecream->dessert_name; ?></span></center>
               </div>
               <div class="">
-                <center><span>IDR
+                <center><span>Rp
                   <?php
-						echo number_format($icecream->price,0,'.',',');
+						echo number_format($icecream->price,0,'.','.');
 					?>
                 </span></center>
               </div>
@@ -103,9 +103,9 @@
                 <center><span><?= $cake->dessert_name; ?></span></center>
               </div>
               <div class="">
-                <center><span>IDR
+                <center><span>Rp
                   <?php
-    								echo number_format($cake->price,0,'.',',');
+    								echo number_format($cake->price,0,'.','.');
     							?>
                 </span></center>
               </div>
@@ -144,9 +144,9 @@
                 <center><span><?= $pastry->dessert_name; ?></span></center>
               </div>
               <div class="">
-                <center><span>IDR
+                <center><span>Rp
                   <?php
-    								echo number_format($pastry->price,0,'.',',');
+    								echo number_format($pastry->price,0,'.','.');
     							?>
                 </span></center>
               </div>
@@ -174,6 +174,7 @@
 		console.log(i);
 		if(username == 'admin'){
 			document.getElementById("add-product").style.display = "block";
+			document.getElementById("dataUser").style.display = "block";
 			document.getElementById("navbarCart").style.display = "none";
 			document.getElementById("add-product-link").href = "<?= base_url();?>Admin/ProductDessert/addDessertProduct";
 			

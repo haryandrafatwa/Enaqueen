@@ -15,12 +15,13 @@ class Welcome extends CI_Controller {
 		$data = $this->um->getUserName($username);
 		$data['judul'] = 'Home';
 		if ($this->session->userdata('status')== true) {
-			$this->load->view('headers/header_login',$data);
+			redirect('User/Home');
 		}else{
 			$this->load->view('headers/header_not_login',$data);
+			$this->load->view('user/home');
+    		$this->load->view('footers/footer');
 		}
-    	$this->load->view('user/home');
-    	$this->load->view('footers/footer');
+    	
 	}
 
 	public function Login(){

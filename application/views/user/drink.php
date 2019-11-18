@@ -65,9 +65,9 @@
 						<center><span style="color:white"><?= $tea->drink_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR
+						<center><span style="color:white" id="price">Rp
 							<?php
-								echo number_format($tea->price,0,'.',',');
+								echo number_format($tea->price,0,'.','.');
 							?>
             				</span>
 						</center>
@@ -112,9 +112,9 @@
 						<center><span style="color:white"><?= $coffee->drink_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR
+						<center><span style="color:white" id="price">Rp
 							<?php
-								echo number_format($coffee->price,0,'.',',');
+								echo number_format($coffee->price,0,'.','.');
 							?>
 						</center>
 					  </div>
@@ -157,9 +157,9 @@
 						<center><span style="color:white"><?= $milkshake->drink_name; ?></span></center>
 					  </div>
 					  <div class="">
-						<center><span style="color:white" id="price">IDR
+						<center><span style="color:white" id="price">Rp
 							<?php
-								echo number_format($milkshake->price,0,'.',',');
+								echo number_format($milkshake->price,0,'.','.');
 							?>
 						</center>
 					  </div>
@@ -191,6 +191,7 @@
 		console.log(i);
 		if(username == 'admin'){
 			document.getElementById("add-product").style.display = "block";
+			document.getElementById("dataUser").style.display = "block";
 			document.getElementById("navbarCart").style.display = "none";
 			document.getElementById("add-product-link").href = "<?= base_url();?>Admin/ProductDrink/addDrinkProduct";
 			

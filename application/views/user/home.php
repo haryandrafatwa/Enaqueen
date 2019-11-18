@@ -18,3 +18,11 @@
     </div>
   </div>
 </div>
+<script>
+	var username = "<?= $username;?>";
+	if(username == "admin"){
+		document.getElementById("navbarCart").style.display = "none";
+		document.getElementById("dataUser").style.display = "block";
+		console.log("HDUHANDJA")
+	}
+</script>

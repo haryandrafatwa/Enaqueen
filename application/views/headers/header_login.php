@@ -147,6 +147,7 @@
 							</span>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 7.9px;">
 								<center><a href="<?= base_url();?>User/MyAccount" class="dropdown-item">MY PROFILE</a></center>
+								<center><a href="<?= base_url();?>User/Home/DataUser" class="dropdown-item" style="display: none" id="dataUser">DATA USER</a></center>
 								<center><a href="<?= base_url();?>Auth/Logout" class="dropdown-item" id="logout">LOGOUT</a></center>
 							</div>
 						</li>
@@ -156,16 +157,19 @@
 		</nav>
 		<script>
 			
-			console.log("<?= $username;?>");
-			var cart = <?= $statusCart; ?> ;
-			
-			console.log(cart);
-			if(cart == 1){
-				document.getElementById("cart-empty").style.display = "none";
-				document.getElementById("cart-avail").style.display = "block";
-			}else{
-				document.getElementById("cart-empty").style.display = "block";
-				document.getElementById("cart-avail").style.display = "none";
+			window.onload = function(){
+
+				console.log("<?= $username;?>");
+				var cart = <?= $statusCart; ?> ;
+
+				console.log(cart);
+				if(cart == 1){
+					document.getElementById("cart-empty").style.display = "none";
+					document.getElementById("cart-avail").style.display = "block";
+				}else{
+					document.getElementById("cart-empty").style.display = "block";
+					document.getElementById("cart-avail").style.display = "none";
+				}
 			}
 			
 			function deleteAlert(username,food,drink,dessert){

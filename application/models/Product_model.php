@@ -31,6 +31,14 @@ class Product_model extends CI_Model{
 		$this->db->update($table, $data);
 	}
 	
+	public function updateStockProduct($productName,$stock,$table){
+		$data = array(
+			'stock'  => $stock
+		);
+		$this->db->where($table.'_name', $productName);
+		$this->db->update($table, $data);
+	}
+	
 	public function deleteProduct($productName,$table){
 		$this->db->where($table.'_name', $productName);
 		print_r($table.'_name');

@@ -128,7 +128,7 @@ class Home extends CI_Controller{
   public function MyAccount(){
 	$username = $this->session->userdata('username');
 	$data = $this->um->getUserName($username);
-	$data['judul'] = 'Profile';
+	$data['judul'] = 'My Account';
 	if ($this->session->userdata('status')== true) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/myaccount');
@@ -187,7 +187,7 @@ class Home extends CI_Controller{
 
 		$data['cart'] = $cart;
 
-		$data['judul'] = 'Home';
+		$data['judul'] = 'Cart';
 		if ($this->session->userdata('status')== true) {
 			$this->load->view('headers/header_login',$data);
 			$this->load->view('user/cart');
@@ -201,14 +201,33 @@ class Home extends CI_Controller{
 	public function Checkout(){
 		$username = $this->session->userdata('username');
 		$data = $this->um->getUserName($username);
+		$getAddress = $this->um->getUserAllAddress($username);
+		for($i = 0; $i < count($getAddress); $i++){
+			if($getAddress[$i]->default == 1){
+				$address = $this->um->getUserAddress($username,$getAddress[$i]->street);
+				break;
+			}else{
+				$address['street'] = "-";
+			}
+		}
+				
+		$objItem = $_GET['obj'];
+		$objItem = json_decode(base64_decode($objItem));
 		
-		$data['obj'] = $_GET['obj'];
-		print_r($data['obj']);
+		$obj = [];
 		
+		for($i = 0; $i < count($objItem);$i++){
+			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);
+			$obj[$i]['category'] = $objItem[$i]->category;
+			$obj[$i]['amount'] = $objItem[$i]->amount;
+			$obj[$i]['pricess'] = $objItem[$i]->price;
+		}
 		
-		$data['judul'] = 'Home';
+		$data['address'] = $address;
+		$data['objItem'] = $obj;
+		$data['judul'] = 'Checkout';
 		if ($this->session->userdata('status')== true) {
-			$this->load->view('headers/header_login',$data);
+			$this->load->view('headers/header_checkout',$data);
 			$this->load->view('user/Checkout');
 			$this->load->view('footers/footer');
 		}else{
@@ -216,21 +235,75 @@ class Home extends CI_Controller{
 		}
 	}
 	
-	function cryptoJsAesDecrypt($passphrase, $jsonString){
-    $jsondata = json_decode($jsonString, true);
-    $salt = hex2bin($jsondata["s"]);
-    $ct = base64_decode($jsondata["ct"]);
-    $iv  = hex2bin($jsondata["iv"]);
-    $concatedPassphrase = $passphrase.$salt;
-    $md5 = array();
-    $md5[0] = md5($concatedPassphrase, true);
-    $result = $md5[0];
-    for ($i = 1; $i < 3; $i++) {
-        $md5[$i] = md5($md5[$i - 1].$concatedPassphrase, true);
-        $result .= $md5[$i];
-    }
-    $key = substr($result, 0, 32);
-    $data = openssl_decrypt($ct, 'aes-256-cbc', $key, true, $iv);
-    return json_decode($data, true);
-}
+	public function Payment(){
+		$username = $this->session->userdata('username');
+		$data = $this->um->getUserName($username);
+		
+		$objItem = $_GET['obj'];
+		$objItem = json_decode(base64_decode($objItem));
+		
+		$obj = [];
+		
+		for($i = 0; $i < count($objItem);$i++){
+			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);	
+			$obj[$i]['amount'] = $objItem[$i]->amount;		
+			$obj[$i]['category'] = $objItem[$i]->category;		
+		}
+		$data['price'] = $objItem[0]->price;
+		$data['objItem'] = $obj;
+		$data['judul'] = 'Payment';
+		if ($this->session->userdata('status')== true) {
+			$this->load->view('headers/header_checkout',$data);
+			$this->load->view('user/Payment');
+			$this->load->view('footers/footer');
+		}else{
+			redirect('User/Home/');
+		}
+	}
+	
+	public function payNow(){
+		$username = $this->session->userdata('username');
+		$data = $this->um->getUserName($username);
+		
+		$objItem = $_GET['obj'];
+		$objItem = json_decode(base64_decode($objItem));
+		
+		date_default_timezone_set('Asia/Bangkok');
+		$date = date('Y-m-d H:i:s');
+		
+		for($i = 0; $i < count($objItem);$i++){		
+			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);	
+			$this->um->deleteCart($username,$objItem[$i]->productName,$objItem[$i]->category);
+			$amount = $obj[$i]['stock'] - $objItem[$i]->amount;
+			$this->um->addTranscation($username,$objItem[$i]->productName,$objItem[$i]->trans_method,$date,$objItem[$i]->price);
+			$this->pm->updateStockProduct($objItem[$i]->productName,$amount,$objItem[$i]->category);
+		}
+		redirect('Welcome');
+	}
+	
+	public function DataUser(){
+		$username = $this->session->userdata('username');
+		$data = $this->um->getUserName($username);
+		
+		$data['user'] = $this->um->getAllUser($username);
+		
+		$data['judul'] = 'Data User';
+		if ($this->session->userdata('status')== true) {
+			$this->load->view('headers/header_login',$data);
+			$this->load->view('admin/dataUser');
+			$this->load->view('footers/footer');
+		}else{
+			redirect('User/Home/');
+		}
+	}
+	
+	public function deleteUser(){
+		
+		$username = $_GET['user'];
+		$username = base64_decode($username);
+		$this->um->deleteUser($username);
+		$this->session->set_flashdata('gagal',"That user successfully deleted from database!");
+		redirect('User/Home/DataUser'.$category);
+	}
+	
 }

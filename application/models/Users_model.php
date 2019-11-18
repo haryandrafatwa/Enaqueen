@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Users_model extends CI_Model{
 
+	public function getAllUser($username){
+		$this->db->where('username !=' , $username);
+		$result = $this->db->get('user');
+		return $result->result();
+	}
+	
 	public function getUserEmail($email){
 			$this->db->where('email',$email);
 			$result = $this->db->get('user');
@@ -12,6 +18,18 @@ class Users_model extends CI_Model{
 	public function getUserName($username){
 			$this->db->where('username',$username);
 			$result = $this->db->get('user');
+			return $result->row_array();
+	}
+	
+	public function getUserAllAddress($username){
+			$this->db->where('username',$username);
+			$result = $this->db->get('address');
+			return $result->result();
+	}
+	
+	public function getUserAddress($username,$street){
+			$this->db->where(array('username'=>$username,'street'=>$street));
+			$result = $this->db->get('address');
 			return $result->row_array();
 	}
 
@@ -30,7 +48,6 @@ class Users_model extends CI_Model{
 			"lastname" => "-",
 			"password" => base64_encode($this->input->post('password', true)),
 			"no_telp" => "-",
-			"alamat" => "-",
 			"photoProfile" => base64_encode(file_get_contents($url)),
 		];
 		return $this->db->insert('user', $data);
@@ -56,6 +73,19 @@ class Users_model extends CI_Model{
 			$this->db->where('username', $username);
 			$this->db->update('user', $data);
 		}
+	}
+	
+	function addAddress($username,$streetAdd,$streetAdd2,$city,$state,$building,$zip){
+			$data = array(
+				'street' => $streetAdd,
+				'street2'  => $streetAdd2,
+				'building' => $building,
+				'city' => $city,
+				'state'  => $state,
+				'zip' => $zip,
+				'username' => $username
+			);
+		return $this->db->insert('address', $data);
 	}
 	
 	function getCart($username,$productName,$category){
@@ -124,6 +154,22 @@ class Users_model extends CI_Model{
 	public function deleteCart($username,$product,$category){
 		$this->db->where(array('username' => $username,$category.'_name' => $product));
 		$this->db->delete('cart');
+	}
+	
+	public function addTranscation($username,$product_name,$transaction_method,$date,$total_price){
+		$data = array(
+				'username' => $username,
+				'product_name'  => $product_name,
+				'transaction_method' => $transaction_method,
+				'date' => $date,
+				'total_price'  => $total_price,
+			);
+		return $this->db->insert('transaction', $data);
+	}
+	
+	public function deleteUser($username){
+		$this->db->where('username', $username);
+		$this->db->delete('user');
 	}
 
 }

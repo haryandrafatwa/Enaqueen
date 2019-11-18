@@ -41,9 +41,11 @@
 						  <label class="custom-control-label" for="selectAll" style="color: white;transform: scale(1.5);margin-left: 44px">Select All Items</label>
 						</div>
 					</div>
+<!--
 					<div class="col-3" style="text-align: right">
 						<a href="" class="delete-link">Delete</a>
 					</div>
+-->
 				</div>
 				<div style="border: 3px solid rgba(0,0,0,0.15);margin-top: 20px"></div>
 				<?php $i = 0; $totalprice = 0; $prices;foreach ($cart as $cart): ?>
@@ -59,11 +61,11 @@
 									<div class="col-4" style="">
 										<?php
 											if ($cart->food_name != null){
-												echo '<img src="data:image/;base64,'.$cart->food_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px"/>';
+												echo '<img src="data:image/;base64,'.$cart->food_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px" id="photoImage-'.$i.'" data-tags="food"/>';
 											}else if ($cart->drink_name != null){
-												echo '<img src="data:image/;base64,'.$cart->drink_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px"/>';
+												echo '<img src="data:image/;base64,'.$cart->drink_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px" id="photoImage-'.$i.'" data-tags="drink"/>';
 											}else if ($cart->dessert_name != null){
-												echo '<img src="data:image/;base64,'.$cart->dessert_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px"/>';
+												echo '<img src="data:image/;base64,'.$cart->dessert_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px id="photoImage-'.$i.'" data-tags="dessert"/>';
 											}
 										?>
 									</div>
@@ -72,7 +74,7 @@
 											<span style="font-size: 24px;color: white;font-weight: 600"><?php echo $cart->food_name;echo $cart->drink_name; echo $cart->dessert_name;?></span>
 										</div>
 										<div class="row">
-											<span style="font-size: 24px;color: white;font-weight: 600">IDR <?php 
+											<span style="font-size: 24px;color: white;font-weight: 600">Rp <?php 
 												if($cart->food_name != null){
 													$price =  $cart->food_price;
 													echo number_format($price,0,'.','.');
@@ -83,6 +85,17 @@
 													$price = $cart->dessert_price;
 													echo number_format($price,0,'.','.');
 												}?></span>
+											<input type="number" id="price-<?= $i ?>" value="<?php 
+												if($cart->food_name != null){
+													$prices = $cart->food_price*$cart->amount;
+													echo $prices;
+												}else if ($cart->drink_name != null){
+													$prices = $cart->drink_price*$cart->amount;
+													echo $prices;
+												}else if ($cart->dessert_name != null){
+													$prices = $cart->dessert_price*$cart->amount;
+													echo $prices;
+												}?>" style="display: none">
 											<input type="number" id="input-price-<?= $i ?>" value="<?php 
 												if($cart->food_name != null){
 													$prices = $cart->food_price*$cart->amount;
@@ -126,7 +139,8 @@
 							</div>
 							<div class="col-6" style="text-align: right;padding: 0px;margin: 0px">
 								<input type="number" style="display: none" id="totPrice" value="<?= $totalprice ?>">
-								<span style="color: white;font-weight: 600" id="spanPrice">IDR <?= number_format($totalprice,0,'.','.');?></span>
+								<span style="color: white;font-weight: 600" id="spanPrice">Rp <?= number_format($totalprice,0,'.','.');?></span>
+								<span style="color: white;font-weight: 600;display: none" id="spanPriceNull">-</span>
 							</div>
 						</div>
 					</div>
@@ -160,18 +174,15 @@
 				window.value = window.value + 1;
 				objCart['productName'] = document.getElementById("checkbox-"+y).dataset.tags;
 				objCart['amount'] = (document.getElementById("input-amount-"+y).value);
-				objCart['price'] = (document.getElementById("input-price-"+y).value);
+				objCart['price'] = (document.getElementById("price-"+y).value);
+				objCart['category'] = document.getElementById("photoImage-"+y).dataset.tags;
 				listObjCart.push(objCart);
 			}
 		}
 		
 		if(listObjCart.length != 0){
-			//var encrypted = encrypt(objCart,'Some');
-			/*var encrypted = CryptoJS.AES.encrypt(JSON.stringify(listObjCart),"iniobjekcart");
-			alert(encrypted);
-			var decrypted = CryptoJS.AES.decrypt(encrypted,"iniobjekcart");*/
-			
 			var objJsonStr = btoa(JSON.stringify(listObjCart))
+			//var objJsonStr = JSON.stringify(listObjCart)
 			window.location = "<?= base_url(); ?>User/Home/Checkout?obj="+objJsonStr;
 		}else{
 			buyAlert();
@@ -200,10 +211,14 @@
 			if (i == window.value){
 				document.getElementById("btn-buy").innerHTML = "Buy("+i+")";
 				document.getElementById("selectAll").checked = true;
+				document.getElementById("spanPriceNull").style.display = "none";
+				document.getElementById("spanPrice").style.display = "block";
 			}else if (window.value == 0){
 				document.getElementById("btn-buy").innerHTML = "Buy";
 				document.getElementById("btn-buy").style.backgroundColor = "#808080";
 				document.getElementById("btn-buy").style.color = "white";
+				document.getElementById("spanPriceNull").style.display = "block";
+				document.getElementById("spanPrice").style.display = "none";
 			}else{
 				document.getElementById("btn-buy").innerHTML = "Buy("+window.value+")";
 				document.getElementById("btn-buy").style.backgroundColor = "#0d0";
@@ -222,6 +237,8 @@
 					document.getElementById("btn-buy").innerHTML = "Buy("+i+")";
 					document.getElementById("btn-buy").style.backgroundColor = "#0d0";
 					document.getElementById("btn-buy").style.color = "black";
+					document.getElementById("spanPriceNull").style.display = "none";
+					document.getElementById("spanPrice").style.display = "block";
 				}
 				else{
 					for( var j = 0; j < i; j++){
@@ -230,6 +247,8 @@
 					document.getElementById("btn-buy").innerHTML = "Buy";
 					document.getElementById("btn-buy").style.backgroundColor = "#808080";
 					document.getElementById("btn-buy").style.color = "white";
+					document.getElementById("spanPriceNull").style.display = "block";
+					document.getElementById("spanPrice").style.display = "none";
 				}
 			});
 			
@@ -248,11 +267,7 @@
 	
 	
 	function inputAmount(i,amount, price){
-		const formatter = new Intl.NumberFormat('id-ID', {
-		  style: 'currency',
-		  currency: 'IDR',
-		  minimumFractionDigits: 0
-		});
+		
 		var k = <?= $i ?>;
 		if(amount < 1){
 			document.getElementById("input-amount-"+i).value = 1; 
@@ -274,6 +289,7 @@
 				totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
 			}
 		}
+		document.getElementById("price-"+i).value = totalPrice; 
 		document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 	}
 	
@@ -293,11 +309,14 @@
 		var totalPrice = 0;
 		for (var x = 0; x < k; x++){
 			var newAmount = 0;
+			var prices;
 			var newPrice = 0;
 			newAmount = newAmount+ parseInt(document.getElementById("input-amount-"+x).value);
 			newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
 			totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
+			prices = price * result;
 		}
+		document.getElementById("price-"+i).value = prices; 
 		document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 	}
 	
@@ -310,7 +329,9 @@
 		console.log(document.getElementById("input-amount-"+i).value);
 		var value = document.getElementById("input-amount-"+i).value;
 		if (value != 1){
-			document.getElementById("input-amount-"+i).value = value-1;
+			var result = value - 1;
+			document.getElementById("input-amount-"+i).value = result;
+			var prices = result * price;
 			
 			var k = <?= $i ?>;
 		
@@ -322,6 +343,7 @@
 				newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
 				totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
 			}
+			document.getElementById("price-"+i).value = prices; 
 			document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 		}
 	}
