@@ -166,7 +166,7 @@
   </div>
 </div>
 <script>
-	
+
 		var username = "<?php echo $this->session->userdata('username'); ?>";
 		var i = <?= count($productIce); ?> ;
 		var h = <?= count($productCak); ?> ;
@@ -175,30 +175,31 @@
 		if(username == 'admin'){
 			document.getElementById("add-product").style.display = "block";
 			document.getElementById("dataUser").style.display = "block";
+			document.getElementById("dataTransaksi").style.display = "block";
 			document.getElementById("navbarCart").style.display = "none";
 			document.getElementById("add-product-link").href = "<?= base_url();?>Admin/ProductDessert/addDessertProduct";
-			
+
 			for(var y = 0; y < i;y++){
 				document.getElementById("btn-edit-icecream-"+y).style.display = "block";
 				document.getElementById("btn-add-icecream-"+y).style.display = "none";
 			}
-			
+
 			for(var y = 0; y < h;y++){
 				document.getElementById("btn-edit-cake-"+y).style.display = "block";
 				document.getElementById("btn-add-cake-"+y).style.display = "none";
 			}
-			
+
 			for(var y = 0; y < j;y++){
 				document.getElementById("btn-edit-pastry-"+y).style.display = "block";
 				document.getElementById("btn-add-pastry-"+y).style.display = "none";
 			}
-			
+
 		}else{
 			document.getElementById("add-product").style.display = "none";
 			document.getElementById("btn-edit").style.display = "none";
 			document.getElementById("btn-add").style.display = "block";
 		}
-	
+
 	function clicked(test){
 		var username = "<?php echo $this->session->userdata('username'); ?>";
 		if(username == 'admin'){
@@ -209,7 +210,7 @@
 			window.location = "<?= base_url();?>User/Home/addToCart/"+test+"/"+username+"/Dessert";
 		}
 	}
-	
+
 	function addCartAlert(){
 		const swalWithBootstrapButtons = Swal.mixin({
 		  customClass: {

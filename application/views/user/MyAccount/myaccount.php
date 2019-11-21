@@ -3,20 +3,20 @@
 		color: white;
 		font-weight: 600
 	}
-	
+
 	.jmb-isi{
 		color: white;
 	}
-	
+
 	.left-item{
 		color: white;
 	}
-	
+
 	.left-item:hover{
 		color: rgba(51,51,51,0.5);
 		text-decoration: none
 	}
-	
+
 	.jmb-isi:hover{
 		color: #808080;
 		text-decoration: none
@@ -71,7 +71,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row" style="">
 					<div class="jumbotron" style="width: 80%;background-color: rgba(51,51,51,0.5);padding: 30px;height: 200px">
 						<div class="container" style="padding: 0px">
@@ -87,7 +87,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row" style="">
 					<div class="jumbotron" style="width: 80%;background-color: rgba(51,51,51,0.5);padding: 30px;height: 200px">
 						<div class="container" style="padding: 0px">
@@ -120,7 +120,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row" style="">
 					<div class="jumbotron" style="width: 80%;background-color: rgba(51,51,51,0.5);padding: 30px;height: 200px">
 						<div class="container" style="padding: 0px">
@@ -136,7 +136,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row" style="">
 					<div class="jumbotron" style="width: 80%;background-color: rgba(51,51,51,0.5);padding: 30px;height: 200px">
 						<div class="container" style="padding: 0px">
@@ -156,3 +156,12 @@
 </div>
 		</div>
 </div>
+<script type="text/javascript">
+	var username = "<?= $username;?>";
+	if(username == "admin"){
+		document.getElementById("navbarCart").style.display = "none";
+		document.getElementById("dataUser").style.display = "block";
+		document.getElementById("dataTransaksi").style.display = "block";
+		console.log("HDUHANDJA")
+	}
+</script>

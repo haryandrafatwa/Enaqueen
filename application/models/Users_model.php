@@ -8,7 +8,15 @@ class Users_model extends CI_Model{
 		$result = $this->db->get('user');
 		return $result->result();
 	}
-	
+
+	public function getAllTransaction(){
+		$this->db->select('*');
+		$this->db->from('transaction');
+		$this->db->join('user', 'user.username = transaction.username','left');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function getUserEmail($email){
 			$this->db->where('email',$email);
 			$result = $this->db->get('user');
@@ -20,13 +28,13 @@ class Users_model extends CI_Model{
 			$result = $this->db->get('user');
 			return $result->row_array();
 	}
-	
+
 	public function getUserAllAddress($username){
 			$this->db->where('username',$username);
 			$result = $this->db->get('address');
 			return $result->result();
 	}
-	
+
 	public function getUserAddress($username,$street){
 			$this->db->where(array('username'=>$username,'street'=>$street));
 			$result = $this->db->get('address');
@@ -52,9 +60,9 @@ class Users_model extends CI_Model{
 		];
 		return $this->db->insert('user', $data);
 	}
-	
+
 	function updatePersonalDetail($username,$first,$last,$image,$phonenumber){
-		
+
 		if($image == null){
 			$data = array(
 				'firstname' => $first,
@@ -74,7 +82,7 @@ class Users_model extends CI_Model{
 			$this->db->update('user', $data);
 		}
 	}
-	
+
 	function addAddress($username,$streetAdd,$streetAdd2,$city,$state,$building,$zip){
 			$data = array(
 				'street' => $streetAdd,
@@ -87,27 +95,27 @@ class Users_model extends CI_Model{
 			);
 		return $this->db->insert('address', $data);
 	}
-	
+
 	function getCart($username,$productName,$category){
 		$this->db->where(array('username' => $username, $category.'_name' => $productName));
 		$result = $this->db->get('cart');
 		return $result->row_array();
 	}
-	
+
 	function getCartList($username){
-		
+
 		$this->db->select('cart.food_name as food_name,cart.drink_name as drink_name,cart.dessert_name as dessert_name,cart.amount as amount,food.photo as food_photo,drink.photo as drink_photo,dessert.photo as dessert_photo,food.price as food_price,drink.price as drink_price,dessert.price as dessert_price');
 		$this->db->from('cart');
-		
+
 		$this->db->join('food', 'food.food_name = cart.food_name','left');
 		$this->db->join('drink', 'drink.drink_name = cart.drink_name','left');
 		$this->db->join('dessert', 'dessert.dessert_name = cart.dessert_name','left');
-		
+
 		$this->db->where('username',$username);
 		$query = $this->db->get();
 		return $query->result();
 	}
-	
+
 	function addCart($username,$productName,$category,$price){
 		if($category == 'Food'){
 			$data = [
@@ -139,7 +147,7 @@ class Users_model extends CI_Model{
 		}
 		$this->db->insert('cart', $data);
 	}
-	
+
 	function updateCart($username,$productName,$amount,$category,$price){
 		$data = [
 			"amount" => $amount,
@@ -150,12 +158,12 @@ class Users_model extends CI_Model{
 			$category."_name" => $productName));
 		$this->db->update('cart', $data);
 	}
-	
+
 	public function deleteCart($username,$product,$category){
 		$this->db->where(array('username' => $username,$category.'_name' => $product));
 		$this->db->delete('cart');
 	}
-	
+
 	public function addTranscation($username,$product_name,$transaction_method,$date,$total_price){
 		$data = array(
 				'username' => $username,
@@ -166,10 +174,15 @@ class Users_model extends CI_Model{
 			);
 		return $this->db->insert('transaction', $data);
 	}
-	
+
 	public function deleteUser($username){
 		$this->db->where('username', $username);
 		$this->db->delete('user');
+	}
+
+	public function deleteTransaction($id,$username){
+		$this->db->where(array('username' => $username, 'trans_id' => $id));
+		$this->db->delete('transaction');
 	}
 
 }

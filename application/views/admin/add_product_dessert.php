@@ -52,7 +52,7 @@
                         <div class="col-md-12  form-group" data-for="name" style="color: white">
                             <label for="name-form1-53" class="form-control-label mbr-fonts-style display-7">Product's Category</label>
 							<select class="custom-select" required name="productCategory">
-							  <option selected disabled>Select Category Drink</option>
+							  <option selected disabled>Select Category Dessert</option>
 							  <option value="Ice Cream">Ice Cream</option>
 							  <option value="Cake">Cake</option>
 							  <option value="Pastry">Pastry</option>

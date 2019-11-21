@@ -15,7 +15,7 @@
 <div class="container">
 	<div class="row" style="margin-top: 40px">
 		<div class="col-12">
-			<h1 style="color: white">Data User</h1>
+			<h1 style="color: white">Data Transaksi</h1>
 		</div>
 	</div>
 	<div class="row" style="margin-top: 40px">
@@ -23,23 +23,27 @@
 			<table class="table table-hover" style="color: white">
 			  <thead>
 				<tr>
-				  <th scope="col">Username</th>
+				  <th scope="col">Transaction ID</th>
 				  <th scope="col">First Name</th>
 				  <th scope="col">Last Name</th>
-				  <th scope="col">Email</th>
-				  <th scope="col">Phone Number</th>
-				  <th scope="col">Delete</th>
+				  <th scope="col">Product Name</th>
+				  <th scope="col">Transaction Method</th>
+				  <th scope="col">Date</th>
+				  <th scope="col">Total Price</th>
+				  <th>Delete</th>
 				</tr>
 			  </thead>
 			  <tbody>
-				<?php foreach($user as $user): ?>
+				<?php foreach($transaction as $transaction): ?>
 				<tr>
-					<th scope="row"><?= $user->username; ?></th>
-					<td><?= $user->firstname; ?></td>
-					<td><?= $user->lastname; ?></td>
-					<td><?= $user->email; ?></td>
-					<td><?= $user->no_telp; ?></td>
-					<td style="vertical-align: middle"><button style="background-color: transparent;border: none;" onClick="deleteUser('<?= $user->username; ?>')"><i style="color: red" class="fas fa-trash-alt"></i></button></td>
+					<th style="text-align:center"><?= $transaction->trans_id; ?></th>
+					<td><?= $transaction->firstname; ?></td>
+					<td><?= $transaction->lastname; ?></td>
+					<td><?= $transaction->product_name; ?></td>
+					<td><?= $transaction->transaction_method; ?></td>
+					<td><?= $transaction->date; ?></td>
+					<td><?= $transaction->total_price; ?></td>
+					<td style="vertical-align: middle;text-align:center"><button style="background-color: transparent;border: none;" onClick="deleteTransaction('<?= $transaction->trans_id ?>','<?= $transaction->username; ?>')"><i style="color: red" class="fas fa-trash-alt"></i></button></td>
 				</tr>
 				<?php endforeach; ?>
 			  </tbody>
@@ -60,7 +64,7 @@
 	}
 
 
-	function deleteUser(username){
+	function deleteTransaction(id,username){
 		const swalWithBootstrapButtons = Swal.mixin({
 		  customClass: {
 			confirmButton: 'btn btn-success',
@@ -79,8 +83,11 @@
 		  reverseButtons: true
 		}).then((result) => {
 		  if(result.value){
-			  var user = btoa(username);
-			  window.location = "<?= base_url();?>User/Home/deleteUser?user="+user;
+			  var transaction = {};
+				transaction['username'] = username;
+				transaction['id'] = id
+				var objTrans = btoa(JSON.stringify(transaction));
+			  window.location = "<?= base_url();?>User/Home/deleteTransaction?transObj="+objTrans;
 		  }
 		});
 	}

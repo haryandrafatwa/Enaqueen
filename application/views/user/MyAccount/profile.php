@@ -195,7 +195,12 @@
 		document.getElementById("btn-addCart").onclick = function(){
 			alert('Anda Belom login');
 		}
-	}else{
-		
+	}
+	var username = "<?= $username;?>";
+	if(username == "admin"){
+		document.getElementById("navbarCart").style.display = "none";
+		document.getElementById("dataUser").style.display = "block";
+		document.getElementById("dataTransaksi").style.display = "block";
+		console.log("HDUHANDJA")
 	}
 </script>

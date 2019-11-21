@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="<?= base_url();?>/assets/template/front/css/nav_styles.css">
 		<link rel="stylesheet" href="<?= base_url();?>/assets/template/front/css/styles.css">
 		<link href="https://fonts.googleapis.com/css?family=Saira:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-		
+
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
@@ -24,7 +24,7 @@
 
 	<body>
 		<style>
-	
+
 			.view-detail-cart{
 				color: white!important;
 			}
@@ -106,7 +106,7 @@
 												</div>
 												<div class="col-4" style="" >
 													<div class="row">
-														<span style="color:white;margin-top: 10px">IDR <?php 
+														<span style="color:white;margin-top: 10px">IDR <?php
 															if($cart->food_name != null){
 																$price = $cart->food_price*$cart->amount;
 																echo number_format($price,0,'.','.');
@@ -148,6 +148,7 @@
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="margin-top: 7.9px;">
 								<center><a href="<?= base_url();?>User/MyAccount" class="dropdown-item">MY PROFILE</a></center>
 								<center><a href="<?= base_url();?>User/Home/DataUser" class="dropdown-item" style="display: none" id="dataUser">DATA USER</a></center>
+								<center><a href="<?= base_url();?>User/Home/DataTransaksi" class="dropdown-item" style="display: none" id="dataTransaksi">DATA TRANSAKSI</a></center>
 								<center><a href="<?= base_url();?>Auth/Logout" class="dropdown-item" id="logout">LOGOUT</a></center>
 							</div>
 						</li>
@@ -156,11 +157,12 @@
 			</div>
 		</nav>
 		<script>
-			
+
 			window.onload = function(){
 
 				console.log("<?= $username;?>");
 				var cart = <?= $statusCart; ?> ;
+				var username = "<?= $username; ?>";
 
 				console.log(cart);
 				if(cart == 1){
@@ -171,13 +173,13 @@
 					document.getElementById("cart-avail").style.display = "none";
 				}
 			}
-			
+
 			function deleteAlert(username,food,drink,dessert){
-				
+
 				console.log("ini food "+food);
 				console.log("ini drink "+drink);
 				console.log("ini dessert "+dessert);
-				
+
 				const swalWithBootstrapButtons = Swal.mixin({
 				  customClass: {
 					confirmButton: 'btn btn-success',
@@ -200,7 +202,7 @@
 					  'Deleted!',
 					  'Your item has been deleted.',
 					  'success'
-					).then((result) => { 
+					).then((result) => {
 						if(food != ""){
 							window.location = "<?= base_url(); ?>User/Home/deleteFromCart/"+username+"/"+food+"/Food";
 						}else if(drink != ""){
@@ -208,10 +210,10 @@
 						}else if(dessert != ""){
 							window.location = "<?= base_url(); ?>User/Home/deleteFromCart/"+username+"/"+dessert+"/Dessert";
 						}
-						
+
 					});
 				  } else if (
-					 //Read more about handling dismissals below 
+					 //Read more about handling dismissals below
 					result.dismiss === Swal.DismissReason.cancel
 				  ) {
 					swalWithBootstrapButtons.fire(
