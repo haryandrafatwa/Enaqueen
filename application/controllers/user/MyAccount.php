@@ -22,7 +22,7 @@ class MyAccount extends CI_Controller{
 	$data['cart'] = $cart;
 
 	$data['judul'] = 'My Account';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/myaccount');
     	$this->load->view('footers/footer');
@@ -46,7 +46,7 @@ class MyAccount extends CI_Controller{
 	$data['cart'] = $cart;
 
 	$data['judul'] = 'Profile';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/profile');
     	$this->load->view('footers/footer');
@@ -71,7 +71,7 @@ class MyAccount extends CI_Controller{
 	$data['cart'] = $cart;
 	$data['address'] = $address;
 	$data['judul'] = 'Address Book';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/addressBook');
     	$this->load->view('footers/footer');
@@ -95,7 +95,7 @@ class MyAccount extends CI_Controller{
 	$data['cart'] = $cart;
 
 	$data['judul'] = 'Detail Address';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/addAddress');
     	$this->load->view('footers/footer');
@@ -120,7 +120,7 @@ class MyAccount extends CI_Controller{
 	$data['cart'] = $cart;
 
 	$data['judul'] = 'Detail Address';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/detailAddress');
     	$this->load->view('footers/footer');
@@ -144,7 +144,7 @@ class MyAccount extends CI_Controller{
 	$data['cart'] = $cart;
 
 	$data['judul'] = 'Personal Detail';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/personalDetail');
     	$this->load->view('footers/footer');

@@ -14,7 +14,7 @@ class Welcome extends CI_Controller {
 		$username = $this->session->userdata('username');
 		$data = $this->um->getUserName($username);
 		$data['judul'] = 'Home';
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 			redirect('User/Home');
 		}else{
 			$this->load->view('headers/header_not_login',$data);
@@ -25,14 +25,14 @@ class Welcome extends CI_Controller {
 	}
 
 	public function Login(){
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 		  redirect(site_url('User/Home'));
 		}
 		$this->load->view('login');
 	}
 
 	public function Register(){
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 		  redirect(site_url('User/Home'));
 		}
 		$this->load->view('register');

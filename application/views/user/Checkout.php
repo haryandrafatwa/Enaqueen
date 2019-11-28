@@ -8,10 +8,17 @@
                 <p style="color: white;margin-top: 30px" id="phoneNumber"><?= $no_telp; ?></p>
             </div>
             <div class="col-sm-4">
-                <p style="color: white;float:center;" id="address"><?= $address['street']; ?>, <?= $address['building']; ?>, <?= $address['city']; ?>, <?= $address['state']; ?>, 
-				<?= $address['zip']; ?></p>
+                <p style="color: white;float:center;" id="address">
+					<?php if($address != "-"){
+							//echo "$address['street'].", ".$address['building'].", ".$address['city'].", ".$address['state'].", ".$address['zip'])
+						echo $address['street'].", ".$address['building'].", ".$address['city'].", ".$address['state'].", ".$address['zip'];
+					}else{
+						echo "-";
+					}
+					?>
+				</p>
             </div>
-            <div class="col-sm-4"><button class="btn btn-primary" type="button" style="float:right;background-color : red;border-color:red;display: none" id="btn-change">Change</button></div>
+            <div class="col-sm-4"><button class="btn btn-primary" type="button" style="float:right;background-color : red;border-color:red;display: none" id="btn-change" onClick="toOtherPage('<?= base_url();?>User/MyAccount/')">Change</button></div>
         </div>
     </div>
     <div class="container" style="margin-top:30px;color: white;">
@@ -117,6 +124,11 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script>
+		
+		function toOtherPage(base_url){
+			window.location = base_url;
+		}
+		
 		function orderAlert(){
 			Swal.fire(
 			  'Warning!',

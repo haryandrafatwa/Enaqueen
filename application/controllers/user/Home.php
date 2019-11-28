@@ -22,7 +22,7 @@ class Home extends CI_Controller{
 	$data['cart'] = $cart;
 
 	$data['judul'] = 'Home';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 	}else{
 		$this->load->view('headers/header_not_login',$data);
@@ -54,7 +54,7 @@ class Home extends CI_Controller{
 	$data['productBal'] = $productBal;
 
 	$data['judul'] = 'Food';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 	}else{
 		$this->load->view('headers/header_not_login',$data);
@@ -85,7 +85,7 @@ class Home extends CI_Controller{
 	$data['productMil'] = $productMil;
 
 	$data['judul'] = 'Drink';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 	}else{
 		$this->load->view('headers/header_not_login',$data);
@@ -116,7 +116,7 @@ class Home extends CI_Controller{
 	$data['productPas'] = $productPas;
 
 	$data['judul'] = 'Dessert';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 	}else{
 		$this->load->view('headers/header_not_login',$data);
@@ -129,7 +129,7 @@ class Home extends CI_Controller{
 	$username = $this->session->userdata('username');
 	$data = $this->um->getUserName($username);
 	$data['judul'] = 'My Account';
-	if ($this->session->userdata('status')== true) {
+	if ($this->session->userdata('username') == null) {
 		$this->load->view('headers/header_login',$data);
 		$this->load->view('user/myaccount/myaccount');
     	$this->load->view('footers/footer');
@@ -176,9 +176,8 @@ class Home extends CI_Controller{
 	public function Cart(){
 		$username = $this->session->userdata('username');
 		$data = $this->um->getUserName($username);
-
+		
 		$cart = $this->um->getCartList($username);
-
 		if($cart != null){
 			$data['statusCart'] = true;
 		}else{
@@ -188,7 +187,7 @@ class Home extends CI_Controller{
 		$data['cart'] = $cart;
 
 		$data['judul'] = 'Cart';
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 			$this->load->view('headers/header_login',$data);
 			$this->load->view('user/cart');
 			$this->load->view('footers/footer');
@@ -202,13 +201,17 @@ class Home extends CI_Controller{
 		$username = $this->session->userdata('username');
 		$data = $this->um->getUserName($username);
 		$getAddress = $this->um->getUserAllAddress($username);
-		for($i = 0; $i < count($getAddress); $i++){
-			if($getAddress[$i]->default == 1){
-				$address = $this->um->getUserAddress($username,$getAddress[$i]->street);
-				break;
-			}else{
-				$address['street'] = "-";
+		if ($getAddress != null){
+			for($i = 0; $i < count($getAddress); $i++){
+				if($getAddress[$i]->default == 1){
+					$address = $this->um->getUserAddress($username,$getAddress[$i]->street);
+					break;
+				}else{
+					$address['street'] = "-";
+				}
 			}
+		}else{
+			$address = "-";
 		}
 
 		$objItem = $_GET['obj'];
@@ -226,7 +229,7 @@ class Home extends CI_Controller{
 		$data['address'] = $address;
 		$data['objItem'] = $obj;
 		$data['judul'] = 'Checkout';
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 			$this->load->view('headers/header_checkout',$data);
 			$this->load->view('user/Checkout');
 			$this->load->view('footers/footer');
@@ -252,7 +255,7 @@ class Home extends CI_Controller{
 		$data['price'] = $objItem[0]->price;
 		$data['objItem'] = $obj;
 		$data['judul'] = 'Payment';
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 			$this->load->view('headers/header_checkout',$data);
 			$this->load->view('user/Payment');
 			$this->load->view('footers/footer');
@@ -274,9 +277,9 @@ class Home extends CI_Controller{
 		for($i = 0; $i < count($objItem);$i++){
 			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);
 			$this->um->deleteCart($username,$objItem[$i]->productName,$objItem[$i]->category);
-			$amount = $obj[$i]['stock'] - $objItem[$i]->amount;
-			$this->um->addTranscation($username,$objItem[$i]->productName,$objItem[$i]->trans_method,$date,$objItem[$i]->price);
-			$this->pm->updateStockProduct($objItem[$i]->productName,$amount,$objItem[$i]->category);
+			$stock = $obj[$i]['stock'] - $objItem[$i]->amount;
+			$this->um->addTransaction($username,$objItem[$i]->category,$objItem[$i]->productName,$objItem[$i]->trans_method,$date,$objItem[$i]->price,$stock,$objItem[$i]->amount);
+			$this->pm->updateStockProduct($objItem[$i]->productName,$stock,$objItem[$i]->category);
 		}
 		redirect('Welcome');
 	}
@@ -288,7 +291,7 @@ class Home extends CI_Controller{
 		$data['user'] = $this->um->getAllUser($username);
 
 		$data['judul'] = 'Data User';
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 			$this->load->view('headers/header_login',$data);
 			$this->load->view('admin/dataUser');
 			$this->load->view('footers/footer');
@@ -304,7 +307,7 @@ class Home extends CI_Controller{
 		$data['transaction'] = $this->um->getAllTransaction();
 
 		$data['judul'] = 'Data Transaksi';
-		if ($this->session->userdata('status')== true) {
+		if ($this->session->userdata('username') != null) {
 			$this->load->view('headers/header_login',$data);
 			$this->load->view('admin/dataTransaksi');
 			$this->load->view('footers/footer');

@@ -91,7 +91,8 @@ class Users_model extends CI_Model{
 				'city' => $city,
 				'state'  => $state,
 				'zip' => $zip,
-				'username' => $username
+				'username' => $username,
+				'default' => true
 			);
 		return $this->db->insert('address', $data);
 	}
@@ -164,14 +165,16 @@ class Users_model extends CI_Model{
 		$this->db->delete('cart');
 	}
 
-	public function addTranscation($username,$product_name,$transaction_method,$date,$total_price){
+	public function addTransaction($username,$category,$product_name,$transaction_method,$date,$total_price,$stock,$amount){
 		$data = array(
 				'username' => $username,
 				'product_name'  => $product_name,
 				'transaction_method' => $transaction_method,
 				'date' => $date,
 				'total_price'  => $total_price,
+				'amount' => $amount
 			);
+		
 		return $this->db->insert('transaction', $data);
 	}
 

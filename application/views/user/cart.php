@@ -255,16 +255,14 @@
 			
 		});
 	
-	window.onload = function(){
-		var i = <?= $i ?>;
-		if($('#selectAll').prop("checked") == true){
-			for( var y = 0; y < i; y++){
-				document.getElementById("checkbox-"+y).checked = true;
-			}
-			document.getElementById("btn-buy").innerHTML = "Buy("+i+")";
+		
+	var i = <?= $i ?>;
+	if($('#selectAll').prop("checked") == true){
+		for( var y = 0; y < i; y++){
+			document.getElementById("checkbox-"+y).checked = true;
 		}
+		document.getElementById("btn-buy").innerHTML = "Buy("+i+")";
 	}
-	
 	
 	function inputAmount(i,amount, price){
 		
