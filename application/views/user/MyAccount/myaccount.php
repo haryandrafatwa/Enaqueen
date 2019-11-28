@@ -97,7 +97,7 @@
 								</div>
 								<div class="dropdown-divider col-12" style="border: 0.5px solid white;margin-top: 20px"></div>
 								<div class="col-12" style="padding: 0px;margin-top:35px">
-									<button style="background-color: red;border: none;border-radius: 10px;font-size: 16px;padding: 6px;width: 100%;color: white">DELETE MY ACCOUNT</button>
+									<button onclick="deleteUser(<?= $username ?>)" style="background-color: red;border: none;border-radius: 10px;font-size: 16px;padding: 6px;width: 100%;color: white">DELETE MY ACCOUNT</button>
 								</div>
 							</div>
 						</div>
@@ -163,5 +163,10 @@
 		document.getElementById("dataUser").style.display = "block";
 		document.getElementById("dataTransaksi").style.display = "block";
 		console.log("HDUHANDJA")
+	}
+
+	function deleteUser(username){
+		var username = btoa(username);
+		window.location = "<?= base_url(); ?>User/MyAccount/deleteUser/user="+username;
 	}
 </script>
