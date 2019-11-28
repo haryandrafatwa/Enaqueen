@@ -65,7 +65,7 @@
 											}else if ($cart->drink_name != null){
 												echo '<img src="data:image/;base64,'.$cart->drink_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px" id="photoImage-'.$i.'" data-tags="drink"/>';
 											}else if ($cart->dessert_name != null){
-												echo '<img src="data:image/;base64,'.$cart->dessert_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px id="photoImage-'.$i.'" data-tags="dessert"/>';
+												echo '<img src="data:image/;base64,'.$cart->dessert_photo.'" class="nav-link language" alt="" width="120" height="120" style = "border-radius:50%;padding:0px" id="photoImage-'.$i.'" data-tags="dessert"/>';
 											}
 										?>
 									</div>
@@ -95,7 +95,7 @@
 												}else if ($cart->dessert_name != null){
 													$prices = $cart->dessert_price*$cart->amount;
 													echo $prices;
-												}?>" style="display: none">
+												}?>" style="display: block">
 											<input type="number" id="input-price-<?= $i ?>" value="<?php 
 												if($cart->food_name != null){
 													$prices = $cart->food_price*$cart->amount;
@@ -106,7 +106,7 @@
 												}else if ($cart->dessert_name != null){
 													$prices = $cart->dessert_price*$cart->amount;
 													echo $cart->dessert_price;
-												}?>" style="display: none">
+												}?>" style="display: block">
 										</div>
 									</div>
 									<div class="col-3">
