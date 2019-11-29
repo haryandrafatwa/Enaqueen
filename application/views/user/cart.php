@@ -95,7 +95,7 @@
 												}else if ($cart->dessert_name != null){
 													$prices = $cart->dessert_price*$cart->amount;
 													echo $prices;
-												}?>" style="display: block">
+												}?>" style="display: none">
 											<input type="number" id="input-price-<?= $i ?>" value="<?php 
 												if($cart->food_name != null){
 													$prices = $cart->food_price*$cart->amount;
@@ -106,7 +106,7 @@
 												}else if ($cart->dessert_name != null){
 													$prices = $cart->dessert_price*$cart->amount;
 													echo $cart->dessert_price;
-												}?>" style="display: block">
+												}?>" style="display: none">
 										</div>
 									</div>
 									<div class="col-3">
@@ -213,6 +213,8 @@
 				document.getElementById("selectAll").checked = true;
 				document.getElementById("spanPriceNull").style.display = "none";
 				document.getElementById("spanPrice").style.display = "block";
+				document.getElementById("btn-buy").style.backgroundColor = "#0d0";
+				document.getElementById("btn-buy").style.color = "black";
 			}else if (window.value == 0){
 				document.getElementById("btn-buy").innerHTML = "Buy";
 				document.getElementById("btn-buy").style.backgroundColor = "#808080";
@@ -265,7 +267,11 @@
 	}
 	
 	function inputAmount(i,amount, price){
-		
+		const formatter = new Intl.NumberFormat('id-ID', {
+		  style: 'currency',
+		  currency: 'IDR',
+		  minimumFractionDigits: 0
+		});
 		var k = <?= $i ?>;
 		if(amount < 1){
 			document.getElementById("input-amount-"+i).value = 1; 
@@ -286,8 +292,9 @@
 				newPrice = newPrice + parseInt(document.getElementById("input-price-"+x).value);
 				totalPrice = totalPrice + (parseInt(newAmount) * parseInt(newPrice));
 			}
+			console.log(totalPrice)
 		}
-		document.getElementById("price-"+i).value = totalPrice; 
+		document.getElementById("price-"+i).value = parseInt(price) * parseInt(amount); 
 		document.getElementById("spanPrice").innerHTML = formatter.format(totalPrice);
 	}
 	

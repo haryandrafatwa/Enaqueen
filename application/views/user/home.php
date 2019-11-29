@@ -24,6 +24,5 @@
 		document.getElementById("navbarCart").style.display = "none";
 		document.getElementById("dataUser").style.display = "block";
 		document.getElementById("dataTransaksi").style.display = "block";
-		console.log("HDUHANDJA")
 	}
 </script>
