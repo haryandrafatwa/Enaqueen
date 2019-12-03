@@ -51,11 +51,11 @@
                  <div class="dragArea row">
                         <div class="col-md-12  form-group" data-for="name" style="color: white">
                             <label for="name-form1-53" class="form-control-label mbr-fonts-style display-7">Product's Category</label>
-                            <input type="text" name="productCategory" data-form-field="Name" required="required" class="form-control display-7" id="productCategory" readonly value="<?php echo $product['category']; ?>">
+                            <input type="text" name="productCategory" data-form-field="Name" required="required" class="form-control display-7" id="productCategory" readonly value="<?php echo $product['id_category']; ?>">
                         </div>
                         <div class="col-md-12  form-group" data-for="name" style="color: white">
                             <label for="name-form1-53" class="form-control-label mbr-fonts-style display-7">Product Name</label>
-                            <input type="text" name="productName" data-form-field="Name" required="required" class="form-control display-7" id="productName" readonly value="<?= $product[$type.'_name'];?>">
+                            <input type="text" name="productName" data-form-field="Name" required="required" class="form-control display-7" id="productName" readonly value="<?= $product['product_name'];?>">
                         </div>
                         <div class="col-md-12  form-group" data-for="name" style="color: white">
                             <label for="name-form1-53" class="form-control-label mbr-fonts-style display-7">Price</label>
@@ -77,10 +77,10 @@
 							  ?>
 							<div class="overlay-layer">Upload photo</div>
                             <input type="file" name="uploadImage" data-form-field="Name" class="form-control upload_btn" id="uploadImage" style="border: none;color: black;padding: 0px;margin-top: 10px;padding: 0px" accept=".jpg, .png, .jpeg" multiple accept='image/*'>
-							
+
                         </div>
                         <div class="col-md-12 input-group-btn" style="margin-top: 60px">
-							<a href="<?= base_url();?>User/Home/Drink" id="btn-cancel" class="btn btn-primary btn-form-product display-4" style="margin-right: 10px;background-color: rgba(51,51,51,0.5)!important;border:#808080 solid!important;color: white!important;border-radius: 10px!important;padding: 10px">CANCEL</a>
+							<a href="<?= base_url();?>User/Home/Product?type=Drink" id="btn-cancel" class="btn btn-primary btn-form-product display-4" style="margin-right: 10px;background-color: rgba(51,51,51,0.5)!important;border:#808080 solid!important;color: white!important;border-radius: 10px!important;padding: 10px">CANCEL</a>
                           	<a href="javascript:deleteAlert()" id="btn-cancel" class="btn btn-danger btn-form-product display-4" style="margin-right: 10px;border:#808080 solid!important;color: white!important;border-radius: 10px!important;padding: 10px">DELETE</a>
 							<button type="submit" class="btn btn-success btn-form-product display-4" style="border-radius: 10px!important;padding: 10px">UPDATE</button>
                         </div>
@@ -90,20 +90,20 @@
         </div>
     </div>
 <script>
-	
+
 	function isInputNumber(evt){
 		var ch = String.fromCharCode(evt.which);
-				
+
 		if(!(/[0-9]/.test(ch))){
 			evt.preventDefault();
 		}
 	}
-	
+
 	var rupiah = document.getElementById("price");
 	rupiah.addEventListener("keyup", function(e) {
 	  rupiah.value = formatRupiah(this.value, "IDR ");
 	});
-	
+
 	function formatRupiah(angka, prefix) {
 	  var number_string = angka.replace(/[^,\d]/g, "").toString(),
 		split = number_string.split(","),
@@ -120,7 +120,7 @@
 	  rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
 	  return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
 	}
-	
+
 	$("#uploadImage").change(function () {
 		if(this.files[0].name.match(".jp") || this.files[0].name.match(".png")){
 			selectedFile = this.files[0];
@@ -138,7 +138,7 @@
 			document.getElementById("uploadImage").value=""; //clear the uploaded file
 		}
 	});
-	
+
 	function deleteAlert(){
 		const swalWithBootstrapButtons = Swal.mixin({
 		  customClass: {
@@ -163,7 +163,7 @@
 			  'Your file has been deleted.',
 			  'success'
 			).then((result) => {
-				window.location = "<?= base_url();?>Admin/ProductDrink/deleteDrinkProduct/<?= $product[$type.'_name'];?>"; 
+				window.location = "<?= base_url();?>Admin/ProductDrink/deleteDrinkProduct/<?= $product['product_name'];?>";
 			});
 		  } else if (
 			/* Read more about handling dismissals below */

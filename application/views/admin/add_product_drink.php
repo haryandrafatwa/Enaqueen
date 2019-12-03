@@ -36,7 +36,7 @@
 <div class="container" style="margin-top: 40px">
         <div class="row justify-content-center">
             <div class="title col-12 col-lg-8" style="color: white">
-              <h1>EDIT PRODUCT</h1>
+              <h1>ADD PRODUCT</h1>
             </div>
         </div>
   </div>
@@ -80,11 +80,11 @@
 							<img id="photoProfile" src="<?= base_url();?>assets/template/front/img/no_image.jpg" class="form-control" style="height: 200px;width: 200px;padding: 0px;border:none"/>
 							<div class="overlay-layer">Upload photo</div>
                             <input type="file" name="uploadImage" data-form-field="Name" class="form-control upload_btn" id="uploadImage" style="border: none;color: black;padding: 0px;margin-top: 10px;padding: 0px" accept=".jpg, .png, .jpeg" multiple accept='image/*' required>
-							
+
                         </div>
                         <div class="col-md-12 input-group-btn" style="margin-top: 60px">
 							<a href="<?= base_url();?>User/Home/Drink" id="btn-cancel" class="btn btn-primary btn-form-product display-4" style="margin-right: 10px;background-color: rgba(51,51,51,0.5)!important;border:#808080 solid!important;color: white!important;border-radius: 10px!important;padding: 10px">CANCEL</a>
-                          	
+
 							<button type="submit" class="btn btn-primary btn-form-product display-4" style="border-radius: 10px!important;padding: 10px">ADD NOW</button>
                         </div>
                     </div>
@@ -93,20 +93,20 @@
         </div>
     </div>
 <script>
-	
+
 	function isInputNumber(evt){
 		var ch = String.fromCharCode(evt.which);
-				
+
 		if(!(/[0-9]/.test(ch))){
 			evt.preventDefault();
 		}
 	}
-	
+
 	var rupiah = document.getElementById("price");
 	rupiah.addEventListener("keyup", function(e) {
 	  rupiah.value = formatRupiah(this.value, "IDR ");
 	});
-	
+
 	function formatRupiah(angka, prefix) {
 	  var number_string = angka.replace(/[^,\d]/g, "").toString(),
 		split = number_string.split(","),
@@ -123,7 +123,7 @@
 	  rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
 	  return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
 	}
-	
+
 	function formatString(angka, prefix) {
 	  var number_string = angka.replace(/[^,\d]/g, "").toString(),
 		split = number_string.split(","),
@@ -140,7 +140,7 @@
 	  rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
 	  return prefix == undefined ? rupiah : rupiah ? "" + rupiah : "";
 	}
-	
+
 	$("#uploadImage").change(function () {
 		if(this.files[0].name.match(".jp") || this.files[0].name.match(".png")){
 			selectedFile = this.files[0];
@@ -158,4 +158,11 @@
 			document.getElementById("uploadImage").value=""; //clear the uploaded file
 		}
 	});
+
+	var username = "<?php echo $this->session->userdata('username'); ?>";
+	if(username == 'admin'){
+		document.getElementById("navbarCart").style.display = "none";
+		document.getElementById("dataUser").style.display = "block";
+		document.getElementById("dataTransaksi").style.display = "block";
+	}
 </script>

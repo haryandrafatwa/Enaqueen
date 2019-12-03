@@ -149,12 +149,12 @@
 										<div>
 											<div class="row" style="margin-top: 10px">
 												<div class="col-12">
-													<span style="font-size: 20px;color: white">State</span>
+													<span style="font-size: 20px;color: white">Province</span>
 												</div>
 											</div>
 											<div class="row" style="margin-top: 4px">
 												<div class="col-12">
-													<input type="text" style="width: 100%;font-size: 20px" name="state" required>
+													<input type="text" style="width: 100%;font-size: 20px" name="province" required>
 												</div>
 											</div>
 										</div>
@@ -188,7 +188,7 @@
 <script type="text/javascript">
 	function isInputNumber(evt){
 		var ch = String.fromCharCode(evt.which);
-				
+
 		if(!(/[0-9]/.test(ch))){
 			evt.preventDefault();
 		}

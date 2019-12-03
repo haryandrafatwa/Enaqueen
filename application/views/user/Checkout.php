@@ -11,7 +11,7 @@
                 <p style="color: white;float:center;" id="address">
 					<?php if($address != "-"){
 							//echo "$address['street'].", ".$address['building'].", ".$address['city'].", ".$address['state'].", ".$address['zip'])
-						echo $address['street'].", ".$address['building'].", ".$address['city'].", ".$address['state'].", ".$address['zip'];
+						echo $address['street'].", ".$address['building'].", ".$address['city'].", ".$address['province'].", ".$address['zip'];
 					}else{
 						echo "-";
 					}
@@ -46,7 +46,7 @@
 						</div>
 						<div class="col-8" style="position: relative">
 							<div style="position: relative;top: 50%;left: 100%;transform: translate(-50%,-50%)">
-								<div style="font-size: 30px;font-weight: 500" id="productName-<?= $i; ?>" data-tags="<?= $data['category']; ?>"><?= $data[$data['category'].'_name']; ?></div>
+								<div style="font-size: 30px;font-weight: 500" id="productName-<?= $i; ?>" data-tags="<?= $data['category']; ?>"><?= $data['product_name']; ?></div>
 								<div style="font-size: 24px;font-weight: bolder">Rp <?= number_format($data['price'],0,'.','.'); ?></div>
 							</div>
 						</div>
@@ -60,7 +60,7 @@
 				<div style="text-align: center;font-size: 30px;font-weight: 500;margin-top: 80px">Rp <?= number_format($data['pricess'],0,'.','.'); ?></div>
 			</div>
         </div>
-			
+
 		<?php $totalprice = $totalprice + $data['pricess']; $i = $i + 1;endforeach; ?>
     </div>
     <div class="container" style="color: white;margin-top: 30px;">
@@ -118,17 +118,17 @@
 			</div>
         </div>
     </div>
-		
+
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script>
-		
+
 		function toOtherPage(base_url){
 			window.location = base_url;
 		}
-		
+
 		function orderAlert(){
 			Swal.fire(
 			  'Warning!',
@@ -136,11 +136,11 @@
 			  'warning'
 			)
 		}
-		
+
 		function onMakeAnOrder(){
 			var phoneNumber = document.getElementById("phoneNumber").innerHTML;
 			var address = document.getElementById("address").innerHTML;
-			if(phoneNumber == "-" || phoneNumber == "" || address == "-" || address == ""){ 
+			if(phoneNumber == "-" || phoneNumber == "" || address == "-" || address == ""){
 				orderAlert();
 			}else{
 				var i = <?= $i ?>;
@@ -163,11 +163,11 @@
 				}
 			}
 		}
-		
+
 		window.onload = function(){
 			var phoneNumber = document.getElementById("phoneNumber").innerHTML;
 			var address = document.getElementById("address").innerHTML;
-			if(phoneNumber == "-" || phoneNumber == "" || address == "-" || address == ""){ 
+			if(phoneNumber == "-" || phoneNumber == "" || address == "-" || address == ""){
 				document.getElementById("btn-change").style.display = "block";
 				document.getElementById("btn-change").style.backgroundColor = "Red";
 			}else{

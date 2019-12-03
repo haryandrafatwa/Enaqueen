@@ -49,13 +49,13 @@
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link language" href="<?= base_url();?>User/Home/Food">FOOD</a>
+							<a class="nav-link language" href="<?= base_url();?>User/Home/Product?type=Food">FOOD</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link language" href="<?= base_url();?>User/Home/Drink">DRINK</a>
+							<a class="nav-link language" href="<?= base_url();?>User/Home/Product?type=Drink">DRINK</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link language" href="<?= base_url();?>User/Home/Dessert">DESSERT</a>
+							<a class="nav-link language" href="<?= base_url();?>User/Home/Product?type=Dessert">DESSERT</a>
 						</li>
 						<li class="nav-item" style="">
 							<a href="#" class="nav-link">PROMOTION</a>
@@ -83,22 +83,16 @@
 									</div>
 									<div style="col-12">
 										<div class="container" id="cart-avail" style="display: none">
-											<?php $totalprice = 0; foreach ($cart as $cart):?>
+											<?php $total_price = 0; foreach ($cart as $cart):?>
 											<div class="row">
 												<div class="col-2">
 													<?php
-														if ($cart->food_name != null){
-															echo '<img src="data:image/;base64,'.$cart->food_photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
-														}else if ($cart->drink_name != null){
-															echo '<img src="data:image/;base64,'.$cart->drink_photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
-														}else if ($cart->dessert_name != null){
-															echo '<img src="data:image/;base64,'.$cart->dessert_photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
-														}
+														echo '<img src="data:image/;base64,'.$cart->photo.'" class="nav-link language" alt="" width="60" height="60" style = "border-radius:50px"/>';
 													?>
 												</div>
 												<div class="col-4 ml-4">
 													<div class="row">
-														<span style="color:white"><?php echo $cart->food_name;echo $cart->drink_name; echo $cart->dessert_name;?></span>
+														<span style="color:white"><?php echo $cart->product_name;?></span>
 													</div>
 													<div class="row">
 														<span style="color:white">QTY: <?php echo $cart->amount;?></span>
@@ -106,31 +100,25 @@
 												</div>
 												<div class="col-4" style="" >
 													<div class="row">
-														<span style="color:white;margin-top: 10px">IDR <?php
-															if($cart->food_name != null){
-																$price = $cart->food_price*$cart->amount;
-																echo number_format($price,0,'.','.');
-															}else if ($cart->drink_name != null){
-																$price = $cart->drink_price*$cart->amount;
-																echo number_format($price,0,'.','.');
-															}else if ($cart->dessert_name != null){
-																$price = $cart->dessert_price*$cart->amount;
-																echo number_format($price,0,'.','.');
-															}?></span>
+														<span style="color:white;margin-top: 10px">IDR
+															<?php
+																echo number_format($cart->totalprice,0,'.','.');
+															?>
+														</span>
 													</div>
 												</div>
 												<div class="col-1" style="margin-left: -18px">
-													<button onClick="deleteAlert('<?= $username; ?>','<?php echo $cart->food_name?>','<?php echo $cart->drink_name?>','<?php echo $cart->dessert_name?>');" class="fas fa-trash-alt" style="background-color: transparent;border: none;color: white;margin-top: 12px"></button>
+													<button onClick="deleteAlert('<?= $username; ?>','<?php echo $cart->product_name?>');" class="fas fa-trash-alt" style="background-color: transparent;border: none;color: white;margin-top: 12px"></button>
 												</div>
 											</div>
-											<?php $totalprice = $totalprice+$price; endforeach; ?>
+											<?php $total_price = $total_price+$cart->totalprice; endforeach; ?>
 											<div class="row" style="background-color: rgba(51,51,51);padding: 8px">
 												<div class="col-3" style="margin-top: 4px">
 													<a href="<?= base_url();?>User/Home/Cart" class="view-detail-cart" style="font-size: 12px">View Detail</a>
 												</div>
 												<div class="col-9" style="text-align: right">
 													<span style="color:white">Total Price: <b>IDR <?php
-															echo number_format($totalprice,0,'.','.');
+															echo number_format($total_price,0,'.','.');
 														?></b></span>
 												</div>
 											</div>
@@ -161,7 +149,7 @@
 			window.onload = function(){
 
 				console.log("<?= $username;?>");
-				var cart = <?= $statusCart; ?> ;
+				var cart = <?= $statusCart; ?>;
 				var username = "<?= $username; ?>";
 
 				console.log(cart);

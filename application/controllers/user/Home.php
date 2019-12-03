@@ -8,30 +8,32 @@ class Home extends CI_Controller{
 	}
 
   public function index(){
-	$username = $this->session->userdata('username');
-	$data = $this->um->getUserName($username);
+		$username = $this->session->userdata('username');
 
-	$cart = $this->um->getCartList($username);
+		$data = $this->um->getUserName($username);
 
-	if($cart != null){
-		$data['statusCart'] = true;
-	}else{
-		$data['statusCart'] = false;
-	}
+		$cart = $this->um->getCartList($username);
 
-	$data['cart'] = $cart;
+		if($cart != null){
+			$data['statusCart'] = true;
+		}else{
+			$data['statusCart'] = false;
+		}
 
-	$data['judul'] = 'Home';
-	if ($this->session->userdata('username') != null) {
-		$this->load->view('headers/header_login',$data);
-	}else{
-		$this->load->view('headers/header_not_login',$data);
-	}
-    $this->load->view('user/home');
-    $this->load->view('footers/footer');
+		$data['cart'] = $cart;
+
+		$data['judul'] = 'Home';
+		if ($this->session->userdata('username') != null) {
+			$this->load->view('headers/header_login',$data);
+		}else{
+			$data['username'] = null;
+			$this->load->view('headers/header_not_login',$data);
+		}
+	    $this->load->view('user/home');
+	    $this->load->view('footers/footer');
   }
 
-  public function Food(){
+  public function Product(){
 	$username = $this->session->userdata('username');
 	$data = $this->um->getUserName($username);
 
@@ -45,21 +47,41 @@ class Home extends CI_Controller{
 
 	$data['cart'] = $cart;
 
-	$productJav = $this->pm->getProduct('Javanese','food');
-	$productSun = $this->pm->getProduct('Sundanese','food');
-	$productBal = $this->pm->getProduct('Balinese','food');
+	$judul = $_GET['type'];
 
-	$data['productJav'] = $productJav;
-	$data['productSun'] = $productSun;
-	$data['productBal'] = $productBal;
+	if($judul == 'Food'){
+		$productCat1 = $this->pm->getProduct(1,"menu");
+		$productCat2 = $this->pm->getProduct(2,"menu");
+		$productCat3 = $this->pm->getProduct(3,"menu");
 
-	$data['judul'] = 'Food';
+		$data['productCat1'] = $productCat1;
+		$data['productCat2'] = $productCat2;
+		$data['productCat3'] = $productCat3;
+	}else if($judul == 'Drink'){
+		$productCat1 = $this->pm->getProduct(4,"menu");
+		$productCat2 = $this->pm->getProduct(5,"menu");
+		$productCat3 = $this->pm->getProduct(6,"menu");
+
+		$data['productCat1'] = $productCat1;
+		$data['productCat2'] = $productCat2;
+		$data['productCat3'] = $productCat3;
+	}else if($judul == 'Dessert'){
+		$productCat1 = $this->pm->getProduct(7,"menu");
+		$productCat2 = $this->pm->getProduct(8,"menu");
+		$productCat3 = $this->pm->getProduct(9,"menu");
+
+		$data['productCat1'] = $productCat1;
+		$data['productCat2'] = $productCat2;
+		$data['productCat3'] = $productCat3;
+	}
+
+	$data['judul'] = $judul;
 	if ($this->session->userdata('username') != null) {
 		$this->load->view('headers/header_login',$data);
 	}else{
 		$this->load->view('headers/header_not_login',$data);
 	}
-    $this->load->view('user/food');
+    $this->load->view('user/product');
     $this->load->view('footers/footer');
   }
 
@@ -143,7 +165,7 @@ class Home extends CI_Controller{
 		$productName = urldecode($productName);
 		$category = urldecode($category);
 		$cart = $this->um->getCart($username,$productName,$category);
-		$product = $this->pm->getAProduct($productName,$category);
+		$product = $this->pm->getAProduct($productName,"menu");
 
 		$price = $product['price'];
 		$amount = $cart['amount'];
@@ -153,11 +175,11 @@ class Home extends CI_Controller{
 		if($cart == null){
 			$this->um->addCart($username,$productName,$category,$price);
 			$this->session->set_flashdata('gagal',"The product successfully added to your cart!");
-			redirect('User/Home/'.$category);
+			redirect('User/Home/Product?type='.$category);
 		}else{
 			$this->um->updateCart($username,$productName,$amount,$category,$price);
 			$this->session->set_flashdata('gagal',"The product successfully added to your cart!");
-			redirect('User/Home/'.$category);
+			redirect('User/Home/Product?type='.$category);
 		}
 	}
 
@@ -176,7 +198,7 @@ class Home extends CI_Controller{
 	public function Cart(){
 		$username = $this->session->userdata('username');
 		$data = $this->um->getUserName($username);
-		
+
 		$cart = $this->um->getCartList($username);
 		if($cart != null){
 			$data['statusCart'] = true;
@@ -185,7 +207,6 @@ class Home extends CI_Controller{
 		}
 
 		$data['cart'] = $cart;
-
 		$data['judul'] = 'Cart';
 		if ($this->session->userdata('username') != null) {
 			$this->load->view('headers/header_login',$data);
@@ -220,10 +241,10 @@ class Home extends CI_Controller{
 		$obj = [];
 
 		for($i = 0; $i < count($objItem);$i++){
-			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);
+			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,"menu");
 			$obj[$i]['category'] = $objItem[$i]->category;
-			$obj[$i]['amount'] = $objItem[$i]->amount;
-			$obj[$i]['pricess'] = $objItem[$i]->price;
+			$obj[$i]['amount'] = (int)$objItem[$i]->amount;
+			$obj[$i]['pricess'] = (int)$objItem[$i]->price;
 		}
 
 		$data['address'] = $address;
@@ -248,7 +269,7 @@ class Home extends CI_Controller{
 		$obj = [];
 
 		for($i = 0; $i < count($objItem);$i++){
-			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);
+			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,"menu");
 			$obj[$i]['amount'] = $objItem[$i]->amount;
 			$obj[$i]['category'] = $objItem[$i]->category;
 		}
@@ -275,11 +296,11 @@ class Home extends CI_Controller{
 		$date = date('Y-m-d H:i:s');
 
 		for($i = 0; $i < count($objItem);$i++){
-			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,$objItem[$i]->category);
+			$obj[$i] = $this->pm->getAProduct($objItem[$i]->productName,"menu");
 			$this->um->deleteCart($username,$objItem[$i]->productName,$objItem[$i]->category);
 			$stock = $obj[$i]['stock'] - $objItem[$i]->amount;
-			$this->um->addTransaction($username,$objItem[$i]->category,$objItem[$i]->productName,$objItem[$i]->trans_method,$date,$objItem[$i]->price,$stock,$objItem[$i]->amount);
-			$this->pm->updateStockProduct($objItem[$i]->productName,$stock,$objItem[$i]->category);
+			$this->um->addTransaction($username,$objItem[$i]->productName,$objItem[$i]->trans_method,$date,$objItem[$i]->price,$objItem[$i]->amount);
+			$this->pm->updateStockProduct($objItem[$i]->productName,$stock,"menu");
 		}
 		redirect('Welcome');
 	}
@@ -305,6 +326,19 @@ class Home extends CI_Controller{
 		$data = $this->um->getUserName($username);
 
 		$data['transaction'] = $this->um->getAllTransaction();
+
+		$minDate= $this->um->getMinDate('transaction');
+		$arrDate = explode("-",$minDate[0]->date);
+		$minYear = $arrDate[0];
+		$data['minYear'] = $minYear;
+
+		$currDate = date("d");
+		$currMonth = date("m");
+		$currYear = date("Y");
+
+		$data['currDate'] = $currDate;
+		$data['currMonth'] = $currMonth;
+		$data['currYear'] = $currYear;
 
 		$data['judul'] = 'Data Transaksi';
 		if ($this->session->userdata('username') != null) {
@@ -332,6 +366,43 @@ class Home extends CI_Controller{
 		$this->um->deleteTransaction($transaction->id,$transaction->username);
 		$this->session->set_flashdata('gagal',"That transaction successfully deleted from database!");
 		redirect('User/Home/DataTransaksi');
+	}
+
+	public function SortingDate(){
+		$date = $this->input->post('inputDate');
+		$month = $this->input->post('inputMonth');
+		$year = $this->input->post('inputYear');
+
+		if($date == null || $month == null || $year == null){
+			$this->session->set_flashdata('kosong',"Please fill in the date, month, and year first!");
+			redirect('User/Home/DataTransaksi?arr=0');
+		}else{
+			$arr['date'] = $date;
+			$arr['month'] = $month;
+			$arr['year'] = $year;
+			printf();
+			redirect('User/Home/ResultSort?arr='.base64_encode(json_encode($arr)));
+		}
+	}
+
+	public function resultSort(){
+		$username = $this->session->userdata('username');
+		$data = $this->um->getUserName($username);
+
+		$arr = json_decode(base64_decode($_GET['arr']));
+
+		print_r($arr->date."-".$arr->month."-".$arr->year);
+
+		$data['transaction'] = $this->um->getTransaction($arr->date,$arr->month,$arr->year);
+
+		$data['judul'] = 'Data Transaksi';
+		if ($this->session->userdata('username') != null) {
+			$this->load->view('headers/header_login',$data);
+			$this->load->view('admin/resultSort');
+			$this->load->view('footers/footer');
+		}else{
+			redirect('User/Home/');
+		}
 	}
 
 }

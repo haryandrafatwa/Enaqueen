@@ -21,7 +21,7 @@
 		<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
-		
+
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
@@ -43,13 +43,13 @@
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link language" href="<?= base_url();?>User/Home/Food">FOOD</a>
+							<a class="nav-link language" href="<?= base_url();?>User/Home/Product?type=Food">FOOD</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link language" href="<?= base_url();?>User/Home/Drink">DRINK</a>
+							<a class="nav-link language" href="<?= base_url();?>User/Home/Product?type=Drink">DRINK</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link language" href="<?= base_url();?>User/Home/Dessert">DESSERT</a>
+							<a class="nav-link language" href="<?= base_url();?>User/Home/Product?type=Dessert">DESSERT</a>
 						</li>
 						<li class="nav-item" style="">
 							<a href="#" class="nav-link">PROMOTION</a>

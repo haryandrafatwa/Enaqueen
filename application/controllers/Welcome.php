@@ -17,11 +17,12 @@ class Welcome extends CI_Controller {
 		if ($this->session->userdata('username') != null) {
 			redirect('User/Home');
 		}else{
+			$data['username'] = null;
 			$this->load->view('headers/header_not_login',$data);
 			$this->load->view('user/home');
     		$this->load->view('footers/footer');
 		}
-    	
+
 	}
 
 	public function Login(){

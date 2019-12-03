@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="<?= base_url();?>/assets/template/front/css/nav_styles.css">
 		<link rel="stylesheet" href="<?= base_url();?>/assets/template/front/css/styles.css">
 		<link href="https://fonts.googleapis.com/css?family=Saira:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-		
+
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
@@ -24,7 +24,7 @@
 
 	<body>
 		<style>
-	
+
 			.view-detail-cart{
 				color: white!important;
 			}
@@ -47,21 +47,11 @@
 			</div>
 		</nav>
 		<script>
-			
+
 			console.log("<?= $username;?>");
-			var cart = <?= $statusCart; ?> ;
-			
-			console.log(cart);
-			if(cart == 1){
-				document.getElementById("cart-empty").style.display = "none";
-				document.getElementById("cart-avail").style.display = "block";
-			}else{
-				document.getElementById("cart-empty").style.display = "block";
-				document.getElementById("cart-avail").style.display = "none";
-			}
-			
+
 			function backAlert(base_url){
-				
+
 				const swalWithBootstrapButtons = Swal.mixin({
 				  customClass: {
 					confirmButton: 'btn btn-success',

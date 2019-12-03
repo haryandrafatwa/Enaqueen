@@ -29,83 +29,8 @@
 <div class="container">
 	<div class="row" style="margin-top: 40px">
 		<div class="col-12">
-			<h1 style="color: white">Data Transaksi</h1>
+			<h1 style="color: white"><a href="<?= base_url(); ?>User/Home/DataTransaksi"><i class="fas fa-chevron-circle-left" style="color:white"></i></a> Data Transaksi</h1>
 		</div>
-	</div>
-	<div class="row" style="margin-top: 40px;width:100%">
-		<form action="<?= base_url();?>User/Home/SortingDate" method="post">
-		  <div class="form-row">
-		    <div class="form-group col-md-4">
-		      <label for="inputDate">Date</label>
-		      <select id="inputDate" class="form-control" name="inputDate">
-						<option selected disabled value="null">Choose Date</option>
-					 	<option>01</option>
-					 	<option>02</option>
-					 	<option>03</option>
-					 	<option>04</option>
-					 	<option>05</option>
-					 	<option>06</option>
-					 	<option>07</option>
-					 	<option>08</option>
-					 	<option>09</option>
-					 	<option>10</option>
-					 	<option>11</option>
-					 	<option>12</option>
-					 	<option>13</option>
- 					 	<option>14</option>
- 					 	<option>15</option>
- 					 	<option>16</option>
- 					 	<option>17</option>
- 					 	<option>18</option>
- 					 	<option>19</option>
- 					 	<option>20</option>
- 					 	<option>21</option>
- 					 	<option>22</option>
- 					 	<option>23</option>
-					 	<option>24</option>
-						<option>25</option>
-						<option>26</option>
-						<option>27</option>
-						<option>28</option>
-						<option>29</option>
-						<option>30</option>
-						<option>31</option>
-				 </select>
-		      </select>
-		    </div>
-				<div class="form-group col-md-4">
-		      <label for="inputMonth">Month</label>
-		      <select id="inputMonth" class="form-control" name="inputMonth">
-		        <option selected disabled>Choose Month</option>
-						<option>01</option>
-						<option>02</option>
-						<option>03</option>
-						<option>04</option>
-						<option>05</option>
-						<option>06</option>
-						<option>07</option>
-						<option>08</option>
-						<option>09</option>
-						<option>10</option>
-						<option>11</option>
-						<option>12</option>
-		      </select>
-		    </div>
-				<div class="form-group col-md-4">
-		      <label for="inputYear">Year</label>
-		      <select id="inputYear" class="form-control" name="inputYear">
-						<option selected disabled>Choose Year</option>
-						<?php
-							while($currYear >= $minYear){
-								echo "<option>".$currYear."</option>";
-									$currYear--;
-							}
-						?>
-		      </select>
-		    </div>
-			  <button type="submit" class="btn btn-primary form-group col-md-3" style="border-radius:10px">Filter</button>
-		  </div>
-		</form>
 	</div>
 	<div class="row" style="margin-top: 40px">
 		<div class="col-12">

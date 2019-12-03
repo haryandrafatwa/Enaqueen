@@ -177,12 +177,12 @@ class MyAccount extends CI_Controller{
 			$streetAdd = $this->input->post('streetAdd');
 			$streetAdd2 = $this->input->post('streetAdd2');
 			$city = $this->input->post('city');
-			$state = $this->input->post('state');
+			$province = $this->input->post('province');
 			$building = $this->input->post('building');
 			$zip = $this->input->post('zip');
 
 
-			$this->um->addAddress($username,$streetAdd,$streetAdd2,$city,$state,$building,$zip);
+			$this->um->addAddress($username,$streetAdd,$streetAdd2,$city,$province,$building,$zip);
 			redirect('User/MyAccount/AddressBook');
 	}
 

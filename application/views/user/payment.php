@@ -4,7 +4,7 @@
 	}
 </style>
 <?php $i = 0; foreach($objItem as $item): ?>
-<input type="text" value="<?= $item[$item['category'].'_name']; ?>" style="display: none" id="productName-<?= $i; ?>">
+<input type="text" value="<?= $item['product_name']; ?>" style="display: none" id="productName-<?= $i; ?>">
 <input type="text" value="<?= $item['category'];?>" style="display: none" id="category-<?= $i; ?>">
 <input type="text" value="<?= $item['amount'];?>" style="display: none" id="amount-<?= $i; ?>">
 <?php $i = $i + 1; endforeach; ?>
@@ -144,7 +144,7 @@
 			  'success'
 			)
 		}
-	
+
 	function payNow(method){
 		var i = <?= $i ?>;
 		console.log(i);
@@ -167,7 +167,7 @@
 		document.getElementById("paymentMethodMenu").dataset.tags = "show"
 		document.getElementById("icon-dropdown").className = "fas fa-chevron-circle-up fa-sm";
 	}
-	
+
 	function hideMethod(){
 		document.getElementById("paymentMethodMenu").style.display = "none";
 		document.getElementById("paymentMethodMenu").dataset.tags = "hidden"
@@ -181,9 +181,9 @@
 			hideMethod();
 		}
 	}
-	
+
 	var method = "Mandiri";
-	
+
 	function chooseMethod(metode){
 		if(metode == "Mandiri"){
 			document.getElementById("mandiri").style.display = "block";
@@ -193,7 +193,7 @@
 			document.getElementById("cod").style.display = "block";
 		}
 	}
-	
+
 	window.onload = function(){
 		var phoneNumber = "<?= $no_telp; ?>"
 		var virtualAcc = phoneNumber.replace(/(\d{4})/g, '$1 ').replace(/(^\s+|\s+$)/,'')

@@ -67,12 +67,12 @@
 							</div>
 							<div class="dropdown-divider" style="padding: 0px;margin-top: 10px"></div>
 							<?php foreach($address as $add): ?>
-							<div class="row" style="margin-top: 
+							<div class="row" style="margin-top:
 													20px">
 								<div class="col-4">
 									<div class="container">
 										<div class="row" style="margin-top: 4px">
-											<span style="color: white;font-size: 20px"><?php 
+											<span style="color: white;font-size: 20px"><?php
 												if($firstname == "-" || $firstname =="" || $lastname == "-" || $lastname =="" ) echo $firstname;
 												else echo $firstname." ".$lastname;?></span>
 										</div>
@@ -92,7 +92,7 @@
 											<span style="color: white;font-size: 20px"><?= $add->zip;?></span>
 										</div>
 										<div class="row" style="margin-top: 4px">
-											<span style="color: white;font-size: 20px"><?= $add->state;?></span>
+											<span style="color: white;font-size: 20px"><?= $add->province;?></span>
 										</div>
 									</div>
 								</div>
@@ -115,5 +115,5 @@
 	function toOtherPage(base_url){
 		window.location = base_url;
 	}
-	
+
 </script>

@@ -14,7 +14,7 @@
     <div class="" style="margin-left:auto;margin-right:auto">
       <center><strong><h1 style="color:white;font-weight:bolder;font-size:60px">ENAQUEEN</h1></strong></center>
       <center><h3 style="color:white">REAL TASTE REAL FOOD</h3></center>
-      <center><a class="btn" style="color:white;background-color:rgba(92,102,109,0.7);font-weight: 600;font-size:18px;padding-left:20px;padding-right:20px" href="<?= base_url();?>User/Home/Food">ONLINE ORDER</a></center>
+      <center><a class="btn" id="btn" style="color:white;background-color:rgba(92,102,109,0.7);font-weight: 600;font-size:18px;padding-left:20px;padding-right:20px" href="<?= base_url();?>User/Home/Product?type=Food"></a></center>
     </div>
   </div>
 </div>
@@ -24,5 +24,8 @@
 		document.getElementById("navbarCart").style.display = "none";
 		document.getElementById("dataUser").style.display = "block";
 		document.getElementById("dataTransaksi").style.display = "block";
-	}
+		document.getElementById("btn").innerHTML = "CHECK PRODUCT";
+	}else{
+    document.getElementById("btn").innerHTML = "ONLINE ORDER";
+  }
 </script>
